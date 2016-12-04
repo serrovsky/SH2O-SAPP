@@ -116,19 +116,26 @@ namespace SmartH2O_SeeApp
                 return;
             }
 
+            if (weekComboBox.SelectedIndex < 0)
+            {
+                MessageBox.Show("Must select a week");
+                return;
+            }
+
+            int year = weeklyDateTimePicker.Value.Year;
             int selectedWeek = weekComboBox.SelectedIndex + 1;
 
             if (parametersCheckedListBox.GetItemChecked(0))
             {
-                //chamar o metodo do servico com (selectedWeek, PH)
+                //chamar o metodo do servico com (selectedWeek, year, PH)
             }
             if (parametersCheckedListBox.GetItemChecked(1))
             {
-                //chamar o metodo do servico com (selectedWeek, NH3)
+                //chamar o metodo do servico com (selectedWeek, year, NH3)
             }
             if (parametersCheckedListBox.GetItemChecked(2))
             {
-                //chamar o metodo do servico com (selectedWeek, CI2)
+                //chamar o metodo do servico com (selectedWeek, year, CI2)
             }
         }
 
@@ -141,18 +148,9 @@ namespace SmartH2O_SeeApp
 
             if (optionsAlarmsComboBox.SelectedIndex == 0)
             {
-                if (parametersCheckedListBox.GetItemChecked(0))
-                {
-                    //chamar o metodo do servico com (PH)
-                }
-                if (parametersCheckedListBox.GetItemChecked(1))
-                {
-                    //chamar o metodo do servico com (NH3)
-                }
-                if (parametersCheckedListBox.GetItemChecked(2))
-                {
-                    //chamar o metodo do servico com (CI2)
-                }
+                //chamar o metodo do servico com (PH)
+                //chamar o metodo do servico com (NH3)
+                //chamar o metodo do servico com (CI2)
                 return;
             }
             else if (optionsAlarmsComboBox.SelectedIndex == 1)
@@ -166,19 +164,9 @@ namespace SmartH2O_SeeApp
                     return;
                 }
 
-                if (parametersCheckedListBox.GetItemChecked(0))
-                {
-                    //chamar o metodo do servico com (startDate, endDate, PH)
-                }
-                if (parametersCheckedListBox.GetItemChecked(1))
-                {
-                    //chamar o metodo do servico com (startDate, endDate, NH3)
-                }
-                if (parametersCheckedListBox.GetItemChecked(2))
-                {
-                    //chamar o metodo do servico com (startDate, endDate, CI2)
-                }
-
+                //chamar o metodo do servico com (startDate, endDate, PH)
+                //chamar o metodo do servico com (startDate, endDate, NH3)
+                //chamar o metodo do servico com (startDate, endDate, CI2)
             }
         }
 
@@ -201,6 +189,8 @@ namespace SmartH2O_SeeApp
 
         private void weeklyDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
+            weekComboBox.
+
             DateTime jan1 = new DateTime(weeklyDateTimePicker.Value.Year, 1, 1);
             //beware different cultures, see other answers
             DateTime startOfFirstWeek = jan1.AddDays(1 - (int)(jan1.DayOfWeek));
