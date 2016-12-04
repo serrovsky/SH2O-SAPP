@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartH2O_SeeApp", "SmartH2O_SeeApp\SmartH2O_SeeApp.csproj", "{9ED8A060-B108-44BE-8DF4-C388EC03F625}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartH2O_Service", "..\..\..\Documents\Visual Studio 2015\Projects\SmartH2O_Service\SmartH2O_Service\SmartH2O_Service.csproj", "{86EE50FC-8EE7-4D8E-B7F0-8BD5BEEDA2A0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9ED8A060-B108-44BE-8DF4-C388EC03F625} = {9ED8A060-B108-44BE-8DF4-C388EC03F625}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
