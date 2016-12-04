@@ -12,8 +12,7 @@ using System.Windows.Forms;
 namespace SmartH2O_SeeApp
 {
 
-    //mejehedfkjnjgjgjkgkhjgsdgsdg
-    //edicao edicao no branch JP
+
 
     public partial class Form1 : Form
     {
@@ -34,6 +33,8 @@ namespace SmartH2O_SeeApp
 
         private void optionsAlarmsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // TODO: No parameters alarm, haver uma opção de predefinida..
+
             if (optionsAlarmsComboBox.SelectedIndex == 1)
             {
                 fromAlarmsDateTimePicker.Enabled = true;
@@ -72,8 +73,7 @@ namespace SmartH2O_SeeApp
                 String sDate = startDate.ToString("dd;MM;yyyy");
                 String eDate = endDate.ToString("dd;MM;yyyy");
                 MessageBox.Show(sDate);
-                MessageBox.Show(eDate);
-
+                MessageBox.Show(eDate)
             }
 
         }
