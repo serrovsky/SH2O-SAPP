@@ -189,6 +189,7 @@ namespace SmartH2O_SeeApp
 
         private void weeklyDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
+            weekComboBox.
 
             DateTime jan1 = new DateTime(weeklyDateTimePicker.Value.Year, 1, 1);
             //beware different cultures, see other answers
