@@ -76,6 +76,7 @@
             this.dateTimePickerDateGraph = new System.Windows.Forms.DateTimePicker();
             this.periodGraphicallComboBox = new System.Windows.Forms.ComboBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label14 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -434,6 +435,7 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.label14);
             this.tabPage6.Controls.Add(this.label13);
             this.tabPage6.Controls.Add(this.dateTimePickerYearGraph);
             this.tabPage6.Controls.Add(this.label12);
@@ -453,7 +455,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(227, 71);
+            this.label13.Location = new System.Drawing.Point(218, 71);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(69, 13);
             this.label13.TabIndex = 8;
@@ -463,17 +465,17 @@
             // 
             this.dateTimePickerYearGraph.CustomFormat = "yyyy";
             this.dateTimePickerYearGraph.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerYearGraph.Location = new System.Drawing.Point(320, 68);
+            this.dateTimePickerYearGraph.Location = new System.Drawing.Point(294, 68);
             this.dateTimePickerYearGraph.Name = "dateTimePickerYearGraph";
             this.dateTimePickerYearGraph.ShowUpDown = true;
-            this.dateTimePickerYearGraph.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerYearGraph.Size = new System.Drawing.Size(256, 20);
             this.dateTimePickerYearGraph.TabIndex = 7;
             this.dateTimePickerYearGraph.ValueChanged += new System.EventHandler(this.dateTimePickerYearGraph_ValueChanged);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(227, 105);
+            this.label12.Location = new System.Drawing.Point(213, 105);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(75, 13);
             this.label12.TabIndex = 6;
@@ -483,14 +485,14 @@
             // 
             this.weekGraphComboBox.Enabled = false;
             this.weekGraphComboBox.FormattingEnabled = true;
-            this.weekGraphComboBox.Location = new System.Drawing.Point(320, 102);
+            this.weekGraphComboBox.Location = new System.Drawing.Point(294, 102);
             this.weekGraphComboBox.Name = "weekGraphComboBox";
-            this.weekGraphComboBox.Size = new System.Drawing.Size(200, 21);
+            this.weekGraphComboBox.Size = new System.Drawing.Size(256, 21);
             this.weekGraphComboBox.TabIndex = 5;
             // 
             // submitGraphicallInformationButton
             // 
-            this.submitGraphicallInformationButton.Location = new System.Drawing.Point(445, 133);
+            this.submitGraphicallInformationButton.Location = new System.Drawing.Point(475, 133);
             this.submitGraphicallInformationButton.Name = "submitGraphicallInformationButton";
             this.submitGraphicallInformationButton.Size = new System.Drawing.Size(75, 23);
             this.submitGraphicallInformationButton.TabIndex = 4;
@@ -500,7 +502,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(226, 37);
+            this.label11.Location = new System.Drawing.Point(218, 37);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(70, 13);
             this.label11.TabIndex = 3;
@@ -509,9 +511,9 @@
             // 
             // dateTimePickerDateGraph
             // 
-            this.dateTimePickerDateGraph.Location = new System.Drawing.Point(320, 31);
+            this.dateTimePickerDateGraph.Location = new System.Drawing.Point(294, 31);
             this.dateTimePickerDateGraph.Name = "dateTimePickerDateGraph";
-            this.dateTimePickerDateGraph.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerDateGraph.Size = new System.Drawing.Size(256, 20);
             this.dateTimePickerDateGraph.TabIndex = 2;
             // 
             // periodGraphicallComboBox
@@ -520,7 +522,7 @@
             this.periodGraphicallComboBox.Items.AddRange(new object[] {
             "One Date",
             "Between Dates"});
-            this.periodGraphicallComboBox.Location = new System.Drawing.Point(33, 71);
+            this.periodGraphicallComboBox.Location = new System.Drawing.Point(48, 71);
             this.periodGraphicallComboBox.Name = "periodGraphicallComboBox";
             this.periodGraphicallComboBox.Size = new System.Drawing.Size(121, 21);
             this.periodGraphicallComboBox.TabIndex = 1;
@@ -532,7 +534,7 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(0, 178);
+            this.chart1.Location = new System.Drawing.Point(0, 174);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
@@ -542,12 +544,22 @@
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(45, 38);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(109, 13);
+            this.label14.TabIndex = 9;
+            this.label14.Text = "Select a option below";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(612, 575);
             this.Controls.Add(this.tabControl1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "SmartH20";
@@ -617,6 +629,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.DateTimePicker dateTimePickerYearGraph;
+        private System.Windows.Forms.Label label14;
     }
 }
 
