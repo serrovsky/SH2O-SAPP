@@ -1,7 +1,9 @@
-﻿using System;
+﻿using SmartH2O_SeeApp.ServiceReference1;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -12,12 +14,31 @@ using System.Windows.Forms;
 namespace SmartH2O_SeeApp
 {
 
-
     public partial class Form1 : Form
     {
+
+        ServiceSmartH2OClient smartH2OClient;
+
         public Form1()
         {
             InitializeComponent();
+            initializeService();
+        }
+
+        private void initializeService()
+        {
+            smartH2OClient = new ServiceSmartH2OClient(); //TODO: acho que esta incompleto..neve precisar de mais alguma coisa quando o servico nao for local..
+
+            HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
+
+            //PROF: como validar return vazio.
+
+            //Console.WriteLine("Testing service!!!!!!!!!!!!!!!!!!!!!!! __>>>>>" + list[0].Averange + "<<<<<<");
+
+            AlarmData[] list2 = smartH2OClient.getDailyAlarmsInformation();
+
+            Console.WriteLine("STEP 3");
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -36,6 +57,8 @@ namespace SmartH2O_SeeApp
 
         private void optionsAlarmsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+            // TODO: No parameters alarm, haver uma opção de predefinida..
             if (optionsAlarmsComboBox.SelectedIndex == 1)
             {
                 fromAlarmsDateTimePicker.Enabled = true;
@@ -47,7 +70,6 @@ namespace SmartH2O_SeeApp
                 toAlarmsDateTimePicker.Enabled = false;
             }
         }
-
 
         private void submitHourlyParameterButton_Click(object sender, EventArgs e)
         {
@@ -68,6 +90,14 @@ namespace SmartH2O_SeeApp
             if (parametersCheckedListBox.GetItemChecked(0))
             {
                 //chamar o metodo do servico com (selectedDate, PH)
+
+                HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, selectedDate);
+
+                foreach (HourlySummarizedValues values in list)
+                {
+                    Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
+                }
+
             }
             if (parametersCheckedListBox.GetItemChecked(1))
             {
