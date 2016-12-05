@@ -31,8 +31,7 @@ namespace SmartH2O_SeeApp
 
             HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
 
-            //PROF: como validar return vazio.
-
+            //TODO: validar se a lista esta vazia..
             //Console.WriteLine("Testing service!!!!!!!!!!!!!!!!!!!!!!! __>>>>>" + list[0].Averange + "<<<<<<");
 
             AlarmData[] list2 = smartH2OClient.getDailyAlarmsInformation();
@@ -54,6 +53,15 @@ namespace SmartH2O_SeeApp
             parametersCheckedListBox.SetItemChecked(0, true);
             parametersCheckedListBox.SetItemChecked(1, true);
             parametersCheckedListBox.SetItemChecked(2, true);
+
+            /*
+            listViewParametersValues.Columns.Add("Parameter", -2, HorizontalAlignment.Left);
+            listViewParametersValues.Columns.Add("Value", -2, HorizontalAlignment.Left);
+            listViewParametersValues.Columns.Add("Date", -2, HorizontalAlignment.Left);
+            listViewParametersValues.Columns.Add("Time", -2, HorizontalAlignment.Left);
+            listViewParametersValues.View = View.Details;
+            */
+
         }
 
         private void optionsAlarmsComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -74,6 +82,8 @@ namespace SmartH2O_SeeApp
 
         private void submitHourlyParameterButton_Click(object sender, EventArgs e)
         {
+            listBoxParametersValues.Items.Clear();
+
             if (checkIfAreNoItemsSelected())
             {
                 return;
@@ -92,12 +102,16 @@ namespace SmartH2O_SeeApp
             {
                 //chamar o metodo do servico com (selectedDate, PH)
 
-                /*HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, selectedDate);
+                HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, selectedDate);
+
+                //TODO: validar se ficheiro vazio
 
                 foreach (HourlySummarizedValues values in list)
                 {
                     Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
-                }*/
+                    listBoxParametersValues.Items.Add("Parameter Type: PH | Hour: " + values.Hour + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
+                }
+
 
             }
             if (parametersCheckedListBox.GetItemChecked(1))
@@ -233,25 +247,25 @@ namespace SmartH2O_SeeApp
             //beware different cultures, see other answers
             DateTime startOfFirstWeek = jan1.AddDays(1 - (int)(jan1.DayOfWeek));
             var weeks =
-                Enumerable
-                    .Range(0, 54)
-                    .Select(i => new
-                    {
-                        weekStart = startOfFirstWeek.AddDays(i * 7)
-                    })
-                    .TakeWhile(x => x.weekStart.Year <= jan1.Year)
-                    .Select(x => new
-                    {
-                        x.weekStart,
-                        weekFinish = x.weekStart.AddDays(7)
-                    })
-                    .SkipWhile(x => x.weekFinish < jan1.AddDays(1))
-                    .Select((x, i) => new
-                    {
-                        x.weekStart,
-                        x.weekFinish,
-                        weekNum = i + 1
-                    });
+            Enumerable
+                .Range(0, 54)
+                .Select(i => new
+                {
+                    weekStart = startOfFirstWeek.AddDays(i * 7)
+                })
+                .TakeWhile(x => x.weekStart.Year <= jan1.Year)
+                .Select(x => new
+                {
+                    x.weekStart,
+                    weekFinish = x.weekStart.AddDays(7)
+                })
+                .SkipWhile(x => x.weekFinish < jan1.AddDays(1))
+                .Select((x, i) => new
+                {
+                    x.weekStart,
+                    x.weekFinish,
+                    weekNum = i + 1
+                });
 
             weekComboBox.Items.Clear();
             foreach (var week in weeks)
@@ -282,25 +296,25 @@ namespace SmartH2O_SeeApp
             //beware different cultures, see other answers
             DateTime startOfFirstWeek = jan1.AddDays(1 - (int)(jan1.DayOfWeek));
             var weeks =
-                Enumerable
-                    .Range(0, 54)
-                    .Select(i => new
-                    {
-                        weekStart = startOfFirstWeek.AddDays(i * 7)
-                    })
-                    .TakeWhile(x => x.weekStart.Year <= jan1.Year)
-                    .Select(x => new
-                    {
-                        x.weekStart,
-                        weekFinish = x.weekStart.AddDays(7)
-                    })
-                    .SkipWhile(x => x.weekFinish < jan1.AddDays(1))
-                    .Select((x, i) => new
-                    {
-                        x.weekStart,
-                        x.weekFinish,
-                        weekNum = i + 1
-                    });
+            Enumerable
+                .Range(0, 54)
+                .Select(i => new
+                {
+                    weekStart = startOfFirstWeek.AddDays(i * 7)
+                })
+                .TakeWhile(x => x.weekStart.Year <= jan1.Year)
+                .Select(x => new
+                {
+                    x.weekStart,
+                    weekFinish = x.weekStart.AddDays(7)
+                })
+                .SkipWhile(x => x.weekFinish < jan1.AddDays(1))
+                .Select((x, i) => new
+                {
+                    x.weekStart,
+                    x.weekFinish,
+                    weekNum = i + 1
+                });
 
             weekGraphComboBox.Items.Clear();
             foreach (var week in weeks)
