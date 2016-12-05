@@ -83,7 +83,7 @@ namespace SmartH2O_SeeApp
 
             if (checkDates(selectedDate, todayDate))
             {
-                MessageBox.Show("Check the dates order FROM < TO");
+                MessageBox.Show("PLEASE CHECK THE DATES (SELECTEDDATE <= TODAY ");
                 return;
             }
 
@@ -109,6 +109,37 @@ namespace SmartH2O_SeeApp
             }
         }
 
+        private void submitAlarmsButton_Click(object sender, EventArgs e)
+        {
+            if (checkIfAreNoItemsSelected())
+            {
+                return;
+            }
+
+            if (optionsAlarmsComboBox.SelectedIndex == 0)
+            {
+                //chamar o metodo do servico com (PH)
+                //chamar o metodo do servico com (NH3)
+                //chamar o metodo do servico com (CI2)
+                return;
+            }
+            else if (optionsAlarmsComboBox.SelectedIndex == 1)
+            {
+                DateTime startDate = fromAlarmsDateTimePicker.Value;
+                DateTime endDate = toAlarmsDateTimePicker.Value;
+
+                if (checkDates(startDate, endDate))
+                {
+                    MessageBox.Show("Check the dates order FROM < TO");
+                    return;
+                }
+
+                //chamar o metodo do servico com (startDate, endDate, PH)
+                //chamar o metodo do servico com (startDate, endDate, NH3)
+                //chamar o metodo do servico com (startDate, endDate, CI2)
+            }
+        }
+
         private void submitDailyParameterButton_Click(object sender, EventArgs e)
         {
             if (checkIfAreNoItemsSelected())
@@ -116,12 +147,19 @@ namespace SmartH2O_SeeApp
                 return;
             }
 
+            DateTime todayDate = DateTime.Now;
             DateTime startDate = fromDailyDateTimePicker.Value;
             DateTime endDate = toDailyDateTimePicker.Value;
 
+            if (checkDates(startDate, todayDate) || checkDates(endDate, todayDate))
+            {
+                MessageBox.Show("Check the dates order STARTDATE OR ENDDATE < TODAY");
+                return;
+            }
+
             if (checkDates(startDate, endDate))
             {
-                MessageBox.Show("Check the dates order FROM < TO");
+                MessageBox.Show("Check the dates order FROMDATE < TODATE");
                 return;
             }
 
@@ -169,36 +207,7 @@ namespace SmartH2O_SeeApp
             }
         }
 
-        private void submitAlarmsButton_Click(object sender, EventArgs e)
-        {
-            if (checkIfAreNoItemsSelected())
-            {
-                return;
-            }
 
-            if (optionsAlarmsComboBox.SelectedIndex == 0)
-            {
-                //chamar o metodo do servico com (PH)
-                //chamar o metodo do servico com (NH3)
-                //chamar o metodo do servico com (CI2)
-                return;
-            }
-            else if (optionsAlarmsComboBox.SelectedIndex == 1)
-            {
-                DateTime startDate = fromAlarmsDateTimePicker.Value;
-                DateTime endDate = toAlarmsDateTimePicker.Value;
-
-                if (checkDates(startDate, endDate))
-                {
-                    MessageBox.Show("Check the dates order FROM < TO");
-                    return;
-                }
-
-                //chamar o metodo do servico com (startDate, endDate, PH)
-                //chamar o metodo do servico com (startDate, endDate, NH3)
-                //chamar o metodo do servico com (startDate, endDate, CI2)
-            }
-        }
 
         private bool checkIfAreNoItemsSelected()
         {
