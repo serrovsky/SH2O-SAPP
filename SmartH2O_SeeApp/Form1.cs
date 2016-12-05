@@ -50,6 +50,7 @@ namespace SmartH2O_SeeApp
         {
             weeklyDateTimePicker_ValueChanged(sender, e);
             optionsAlarmsComboBox.SelectedIndex = 0;
+            periodGraphicallComboBox.SelectedIndex = 0;
             parametersCheckedListBox.SetItemChecked(0, true);
             parametersCheckedListBox.SetItemChecked(1, true);
             parametersCheckedListBox.SetItemChecked(2, true);
@@ -257,6 +258,60 @@ namespace SmartH2O_SeeApp
             {
                 weekComboBox.Items.Add("Semana nº " + week.weekNum + " de " + week.weekStart.ToShortDateString() + " a " + week.weekFinish.ToShortDateString());
             }
+        }
+
+        private void periodGraphicallComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (periodGraphicallComboBox.SelectedIndex == 0)
+            {
+                weekGraphComboBox.Enabled = false;
+                dateTimePickerDateGraph.Enabled = true;
+                dateTimePickerYearGraph.Enabled = false;
+            }
+            else if (periodGraphicallComboBox.SelectedIndex == 1)
+            {
+                weekGraphComboBox.Enabled = true;
+                dateTimePickerDateGraph.Enabled = false;
+                dateTimePickerYearGraph.Enabled = true;
+            }
+        }
+
+        private void dateTimePickerYearGraph_ValueChanged(object sender, EventArgs e)
+        {
+            DateTime jan1 = new DateTime(dateTimePickerYearGraph.Value.Year, 1, 1);
+            //beware different cultures, see other answers
+            DateTime startOfFirstWeek = jan1.AddDays(1 - (int)(jan1.DayOfWeek));
+            var weeks =
+                Enumerable
+                    .Range(0, 54)
+                    .Select(i => new
+                    {
+                        weekStart = startOfFirstWeek.AddDays(i * 7)
+                    })
+                    .TakeWhile(x => x.weekStart.Year <= jan1.Year)
+                    .Select(x => new
+                    {
+                        x.weekStart,
+                        weekFinish = x.weekStart.AddDays(7)
+                    })
+                    .SkipWhile(x => x.weekFinish < jan1.AddDays(1))
+                    .Select((x, i) => new
+                    {
+                        x.weekStart,
+                        x.weekFinish,
+                        weekNum = i + 1
+                    });
+
+            weekGraphComboBox.Items.Clear();
+            foreach (var week in weeks)
+            {
+                weekGraphComboBox.Items.Add("Semana nº " + week.weekNum + " de " + week.weekStart.ToShortDateString() + " a " + week.weekFinish.ToShortDateString());
+            }
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
