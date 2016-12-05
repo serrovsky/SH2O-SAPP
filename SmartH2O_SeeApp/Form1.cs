@@ -309,9 +309,5 @@ namespace SmartH2O_SeeApp
             }
         }
 
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
