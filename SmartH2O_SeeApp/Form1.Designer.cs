@@ -143,7 +143,7 @@
             // 
             // submitHourlyParameterButton
             // 
-            this.submitHourlyParameterButton.Location = new System.Drawing.Point(336, 88);
+            this.submitHourlyParameterButton.Location = new System.Drawing.Point(339, 92);
             this.submitHourlyParameterButton.Name = "submitHourlyParameterButton";
             this.submitHourlyParameterButton.Size = new System.Drawing.Size(75, 23);
             this.submitHourlyParameterButton.TabIndex = 1;
@@ -185,7 +185,7 @@
             // 
             // submitDailyParameterButton
             // 
-            this.submitDailyParameterButton.Location = new System.Drawing.Point(336, 89);
+            this.submitDailyParameterButton.Location = new System.Drawing.Point(339, 92);
             this.submitDailyParameterButton.Name = "submitDailyParameterButton";
             this.submitDailyParameterButton.Size = new System.Drawing.Size(75, 23);
             this.submitDailyParameterButton.TabIndex = 17;
