@@ -1,7 +1,9 @@
-﻿using System;
+﻿using SmartH2O_SeeApp.ServiceReference1;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -12,12 +14,36 @@ using System.Windows.Forms;
 namespace SmartH2O_SeeApp
 {
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> refs/remotes/origin/master
     public partial class Form1 : Form
     {
+
+
+        ServiceSmartH2OClient smartH2OClient;
+
         public Form1()
         {
             InitializeComponent();
+            initializeService();
+        }
+
+        private void initializeService()
+        {
+            smartH2OClient = new ServiceSmartH2OClient(); //TODO: acho que esta incompleto..neve precisar de mais alguma coisa quando o servico nao for local..
+
+            HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
+
+            //PROF: como validar return vazio.
+
+            //Console.WriteLine("Testing service!!!!!!!!!!!!!!!!!!!!!!! __>>>>>" + list[0].Averange + "<<<<<<");
+
+            AlarmData[] list2 = smartH2OClient.getDailyAlarmsInformation();
+
+            Console.WriteLine("STEP 3");
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -51,7 +77,13 @@ namespace SmartH2O_SeeApp
 
         private void submitHourlyParameterButton_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
+
+
+            if (optionsAlarmsComboBox.SelectedIndex < 0)
+=======
             if (checkIfAreNoItemsSelected())
+>>>>>>> refs/remotes/origin/master
             {
                 return;
             }
@@ -61,10 +93,24 @@ namespace SmartH2O_SeeApp
 
             if (checkDates(selectedDate, todayDate))
             {
+<<<<<<< HEAD
+                MessageBox.Show("All alarms");
+
+
+
+
+=======
                 MessageBox.Show("Check the dates order FROM < TO");
+>>>>>>> refs/remotes/origin/master
                 return;
             }
 
+<<<<<<< HEAD
+                String sDate = startDate.ToString("dd;MM;yyyy");
+                String eDate = endDate.ToString("dd;MM;yyyy");
+                MessageBox.Show(sDate);
+                MessageBox.Show(eDate);
+=======
             if (parametersCheckedListBox.GetItemChecked(0))
             {
                 //chamar o metodo do servico com (selectedDate, PH)
@@ -76,6 +122,7 @@ namespace SmartH2O_SeeApp
             if (parametersCheckedListBox.GetItemChecked(2))
             {
                 //chamar o metodo do servico com (selectedDate, CI2)
+>>>>>>> refs/remotes/origin/master
             }
         }
 
@@ -118,12 +165,35 @@ namespace SmartH2O_SeeApp
 
             if (weekComboBox.SelectedIndex < 0)
             {
+<<<<<<< HEAD
+                MessageBox.Show("Data superior ao dia atual");
+                return;
+            }
+
+            //TODO: validar se checkbox tem algum check
+            //check... check, check, check, fuck... check!
+
+            //String sDate = selectedDate.ToString("dd;MM;yyyy");
+            //String eDate = todayDate.ToString("dd;MM;yyyy");
+            //MessageBox.Show(sDate);
+            //MessageBox.Show(eDate);
+
+
+            HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, selectedDate);
+
+            foreach (HourlySummarizedValues values in list)
+            {
+                Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
+            }
+        }
+=======
                 MessageBox.Show("Must select a week");
                 return;
             }
 
             int year = weeklyDateTimePicker.Value.Year;
             int selectedWeek = weekComboBox.SelectedIndex + 1;
+>>>>>>> refs/remotes/origin/master
 
             if (parametersCheckedListBox.GetItemChecked(0))
             {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:4962/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service" />
+  <xs:element name="getHourlySummarizedByDay">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="parameter" type="q1:ParameterType" />
+        <xs:element minOccurs="0" name="day" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getHourlySummarizedByDayResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="getHourlySummarizedByDayResult" nillable="true" type="q2:ArrayOfHourlySummarizedValues" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getDailyAlarmsInformation">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getDailyAlarmsInformationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="getDailyAlarmsInformationResult" nillable="true" type="q3:ArrayOfAlarmData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
