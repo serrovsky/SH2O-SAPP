@@ -27,7 +27,7 @@ namespace SmartH2O_SeeApp
 
         private void initializeService()
         {
-            /*smartH2OClient = new ServiceSmartH2OClient(); //TODO: acho que esta incompleto..neve precisar de mais alguma coisa quando o servico nao for local..
+            smartH2OClient = new ServiceSmartH2OClient(); //TODO: acho que esta incompleto..neve precisar de mais alguma coisa quando o servico nao for local..
 
             HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
 
@@ -36,7 +36,7 @@ namespace SmartH2O_SeeApp
 
             AlarmData[] list2 = smartH2OClient.getDailyAlarmsInformation();
 
-            Console.WriteLine("STEP 3");*/
+            Console.WriteLine("STEP 3");
 
         }
 
