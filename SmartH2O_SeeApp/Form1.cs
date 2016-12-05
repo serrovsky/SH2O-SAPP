@@ -1,7 +1,9 @@
-﻿using System;
+﻿using SmartH2O_SeeApp.ServiceReference1;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -12,13 +14,32 @@ using System.Windows.Forms;
 namespace SmartH2O_SeeApp
 {
 
-
-
     public partial class Form1 : Form
     {
+
+
+        ServiceSmartH2OClient smartH2OClient;
+
         public Form1()
         {
             InitializeComponent();
+            initializeService();
+        }
+
+        private void initializeService()
+        {
+            smartH2OClient = new ServiceSmartH2OClient(); //TODO: acho que esta incompleto..neve precisar de mais alguma coisa quando o servico nao for local..
+
+            HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
+
+            //PROF: como validar return vazio.
+
+            //Console.WriteLine("Testing service!!!!!!!!!!!!!!!!!!!!!!! __>>>>>" + list[0].Averange + "<<<<<<");
+
+            AlarmData[] list2 = smartH2OClient.getDailyAlarmsInformation();
+
+            Console.WriteLine("STEP 3");
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -49,6 +70,8 @@ namespace SmartH2O_SeeApp
 
         private void submitAlarmsButton_Click(object sender, EventArgs e)
         {
+
+
             if (optionsAlarmsComboBox.SelectedIndex < 0)
             {
                 MessageBox.Show("Must select a option");
@@ -57,6 +80,10 @@ namespace SmartH2O_SeeApp
             else if (optionsAlarmsComboBox.SelectedIndex == 0)
             {
                 MessageBox.Show("All alarms");
+
+
+
+
                 return;
             }
             else if (optionsAlarmsComboBox.SelectedIndex == 1)
@@ -73,7 +100,7 @@ namespace SmartH2O_SeeApp
                 String sDate = startDate.ToString("dd;MM;yyyy");
                 String eDate = endDate.ToString("dd;MM;yyyy");
                 MessageBox.Show(sDate);
-                MessageBox.Show(eDate)
+                MessageBox.Show(eDate);
             }
 
         }
@@ -102,14 +129,25 @@ namespace SmartH2O_SeeApp
 
             if (checkDates(selectedDate, todayDate))
             {
-                MessageBox.Show("Check the dates order FROM < TO");
+                MessageBox.Show("Data superior ao dia atual");
                 return;
             }
 
-            String sDate = selectedDate.ToString("dd;MM;yyyy");
-            String eDate = todayDate.ToString("dd;MM;yyyy");
-            MessageBox.Show(sDate);
-            MessageBox.Show(eDate);
+            //TODO: validar se checkbox tem algum check
+            //check... check, check, check, fuck... check!
+
+            //String sDate = selectedDate.ToString("dd;MM;yyyy");
+            //String eDate = todayDate.ToString("dd;MM;yyyy");
+            //MessageBox.Show(sDate);
+            //MessageBox.Show(eDate);
+
+
+            HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, selectedDate);
+
+            foreach (HourlySummarizedValues values in list)
+            {
+                Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
+            }
         }
 
         public bool checkDates(DateTime startDate, DateTime endDate)
