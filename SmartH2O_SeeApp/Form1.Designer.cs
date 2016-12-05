@@ -34,6 +34,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.listBoxParametersValues = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -76,7 +77,6 @@
             this.dateTimePickerDateGraph = new System.Windows.Forms.DateTimePicker();
             this.periodGraphicallComboBox = new System.Windows.Forms.ComboBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.listBoxParametersValues = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -113,6 +113,14 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Parameters Values";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // listBoxParametersValues
+            // 
+            this.listBoxParametersValues.FormattingEnabled = true;
+            this.listBoxParametersValues.Location = new System.Drawing.Point(9, 185);
+            this.listBoxParametersValues.Name = "listBoxParametersValues";
+            this.listBoxParametersValues.Size = new System.Drawing.Size(566, 342);
+            this.listBoxParametersValues.TabIndex = 14;
             // 
             // label4
             // 
@@ -383,7 +391,7 @@
             // 
             this.optionsAlarmsComboBox.FormattingEnabled = true;
             this.optionsAlarmsComboBox.Items.AddRange(new object[] {
-            "All Alarms",
+            "One day",
             "Between to dates"});
             this.optionsAlarmsComboBox.Location = new System.Drawing.Point(28, 57);
             this.optionsAlarmsComboBox.Name = "optionsAlarmsComboBox";
@@ -521,7 +529,7 @@
             this.periodGraphicallComboBox.FormattingEnabled = true;
             this.periodGraphicallComboBox.Items.AddRange(new object[] {
             "One Date",
-            "Between Dates"});
+            "In a week"});
             this.periodGraphicallComboBox.Location = new System.Drawing.Point(48, 71);
             this.periodGraphicallComboBox.Name = "periodGraphicallComboBox";
             this.periodGraphicallComboBox.Size = new System.Drawing.Size(121, 21);
@@ -543,14 +551,6 @@
             this.chart1.Size = new System.Drawing.Size(594, 345);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
-            // 
-            // listBoxParametersValues
-            // 
-            this.listBoxParametersValues.FormattingEnabled = true;
-            this.listBoxParametersValues.Location = new System.Drawing.Point(9, 185);
-            this.listBoxParametersValues.Name = "listBoxParametersValues";
-            this.listBoxParametersValues.Size = new System.Drawing.Size(566, 342);
-            this.listBoxParametersValues.TabIndex = 14;
             // 
             // Form1
             // 
