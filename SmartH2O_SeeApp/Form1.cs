@@ -36,7 +36,7 @@ namespace SmartH2O_SeeApp
             //Console.WriteLine("Testing service!!!!!!!!!!!!SERRA!!!!!!!!!!!!!! __>>>>>" + list[0].Averange + "<<<<<<");
 
             AlarmData[] list2 = smartH2OClient.getDailyAlarmsInformation();
-
+            mais um test
             Console.WriteLine("STEP 3");
             */
         }
