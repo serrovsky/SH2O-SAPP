@@ -61,7 +61,7 @@ namespace SmartH2O_SeeApp
 
             if (checkDates(selectedDate, todayDate))
             {
-                MessageBox.Show("Check the dates order FROM < TO");
+                MessageBox.Show("PLEASE CHECK THE DATES (SELECTEDDATE <= TODAY ");
                 return;
             }
 
@@ -86,12 +86,19 @@ namespace SmartH2O_SeeApp
                 return;
             }
 
+            DateTime todayDate = DateTime.Now;
             DateTime startDate = fromDailyDateTimePicker.Value;
             DateTime endDate = toDailyDateTimePicker.Value;
 
+            if (checkDates(startDate, todayDate) || checkDates(endDate, todayDate))
+            {
+                MessageBox.Show("Check the dates order STARTDATE OR ENDDATE < TODAY");
+                return;
+            }
+
             if (checkDates(startDate, endDate))
             {
-                MessageBox.Show("Check the dates order FROM < TO");
+                MessageBox.Show("Check the dates order FROMDATE < TODATE");
                 return;
             }
 
