@@ -1,9 +1,7 @@
-﻿using SmartH2O_SeeApp.ServiceReference1;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -14,32 +12,12 @@ using System.Windows.Forms;
 namespace SmartH2O_SeeApp
 {
 
+
     public partial class Form1 : Form
     {
-
-
-        ServiceSmartH2OClient smartH2OClient;
-
         public Form1()
         {
             InitializeComponent();
-            initializeService();
-        }
-
-        private void initializeService()
-        {
-            smartH2OClient = new ServiceSmartH2OClient(); //TODO: acho que esta incompleto..neve precisar de mais alguma coisa quando o servico nao for local..
-
-            HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
-
-            //PROF: como validar return vazio.
-
-            //Console.WriteLine("Testing service!!!!!!!!!!!!!!!!!!!!!!! __>>>>>" + list[0].Averange + "<<<<<<");
-
-            AlarmData[] list2 = smartH2OClient.getDailyAlarmsInformation();
-
-            Console.WriteLine("STEP 3");
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -50,12 +28,14 @@ namespace SmartH2O_SeeApp
         private void inicializeComponents(object sender, EventArgs e)
         {
             weeklyDateTimePicker_ValueChanged(sender, e);
+            optionsAlarmsComboBox.SelectedIndex = 0;
+            parametersCheckedListBox.SetItemChecked(0, true);
+            parametersCheckedListBox.SetItemChecked(1, true);
+            parametersCheckedListBox.SetItemChecked(2, true);
         }
 
         private void optionsAlarmsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // TODO: No parameters alarm, haver uma opção de predefinida..
-
             if (optionsAlarmsComboBox.SelectedIndex == 1)
             {
                 fromAlarmsDateTimePicker.Enabled = true;
@@ -68,22 +48,109 @@ namespace SmartH2O_SeeApp
             }
         }
 
-        private void submitAlarmsButton_Click(object sender, EventArgs e)
+
+        private void submitHourlyParameterButton_Click(object sender, EventArgs e)
         {
-
-
-            if (optionsAlarmsComboBox.SelectedIndex < 0)
+            if (checkIfAreNoItemsSelected())
             {
-                MessageBox.Show("Must select a option");
                 return;
             }
-            else if (optionsAlarmsComboBox.SelectedIndex == 0)
+
+            DateTime todayDate = DateTime.Now;
+            DateTime selectedDate = parameterHourlyDateTimePicker.Value;
+
+            if (checkDates(selectedDate, todayDate))
             {
-                MessageBox.Show("All alarms");
+                MessageBox.Show("Check the dates order FROM < TO");
+                return;
+            }
 
+            if (parametersCheckedListBox.GetItemChecked(0))
+            {
+                //chamar o metodo do servico com (selectedDate, PH)
+            }
+            if (parametersCheckedListBox.GetItemChecked(1))
+            {
+                //chamar o metodo do servico com (selectedDate, NH3)
+            }
+            if (parametersCheckedListBox.GetItemChecked(2))
+            {
+                //chamar o metodo do servico com (selectedDate, CI2)
+            }
+        }
 
+        private void submitDailyParameterButton_Click(object sender, EventArgs e)
+        {
+            if (checkIfAreNoItemsSelected())
+            {
+                return;
+            }
 
+            DateTime startDate = fromDailyDateTimePicker.Value;
+            DateTime endDate = toDailyDateTimePicker.Value;
 
+            if (checkDates(startDate, endDate))
+            {
+                MessageBox.Show("Check the dates order FROM < TO");
+                return;
+            }
+
+            if (parametersCheckedListBox.GetItemChecked(0))
+            {
+                //chamar o metodo do servico com (startDate, endDate, PH)
+            }
+            if (parametersCheckedListBox.GetItemChecked(1))
+            {
+                //chamar o metodo do servico com (startDate, endDate, NH3)
+            }
+            if (parametersCheckedListBox.GetItemChecked(2))
+            {
+                //chamar o metodo do servico com (startDate, endDate, CI2)
+            }
+        }
+
+        private void submitWeeklyParameterButton_Click(object sender, EventArgs e)
+        {
+            if (checkIfAreNoItemsSelected())
+            {
+                return;
+            }
+
+            if (weekComboBox.SelectedIndex < 0)
+            {
+                MessageBox.Show("Must select a week");
+                return;
+            }
+
+            int year = weeklyDateTimePicker.Value.Year;
+            int selectedWeek = weekComboBox.SelectedIndex + 1;
+
+            if (parametersCheckedListBox.GetItemChecked(0))
+            {
+                //chamar o metodo do servico com (selectedWeek, year, PH)
+            }
+            if (parametersCheckedListBox.GetItemChecked(1))
+            {
+                //chamar o metodo do servico com (selectedWeek, year, NH3)
+            }
+            if (parametersCheckedListBox.GetItemChecked(2))
+            {
+                //chamar o metodo do servico com (selectedWeek, year, CI2)
+            }
+        }
+
+        private void submitAlarmsButton_Click(object sender, EventArgs e)
+        {
+            if (checkIfAreNoItemsSelected())
+            {
+                return;
+            }
+
+            if (optionsAlarmsComboBox.SelectedIndex == 0)
+            {
+                //chamar o metodo do servico com (PH)
+                //chamar o metodo do servico com (NH3)
+                //chamar o metodo do servico com (CI2)
                 return;
             }
             else if (optionsAlarmsComboBox.SelectedIndex == 1)
@@ -97,118 +164,28 @@ namespace SmartH2O_SeeApp
                     return;
                 }
 
-                String sDate = startDate.ToString("dd;MM;yyyy");
-                String eDate = endDate.ToString("dd;MM;yyyy");
-                MessageBox.Show(sDate);
-                MessageBox.Show(eDate);
+                //chamar o metodo do servico com (startDate, endDate, PH)
+                //chamar o metodo do servico com (startDate, endDate, NH3)
+                //chamar o metodo do servico com (startDate, endDate, CI2)
             }
-
         }
 
-        private void submitDailyParameterButton_Click(object sender, EventArgs e)
+        private bool checkIfAreNoItemsSelected()
         {
-            DateTime startDate = fromDailyDateTimePicker.Value;
-            DateTime endDate = toDailyDateTimePicker.Value;
-
-            if (checkDates(startDate, endDate))
+            if (parametersCheckedListBox.CheckedItems.Count == 0)
             {
-                MessageBox.Show("Check the dates order FROM < TO");
-                return;
+                MessageBox.Show("Must select a parameter to show values");
+                return true;
             }
 
-            String sDate = startDate.ToString("dd;MM;yyyy");
-            String eDate = endDate.ToString("dd;MM;yyyy");
-            MessageBox.Show(sDate);
-            MessageBox.Show(eDate);
+            return false;
         }
 
-        private void submitHourlyParameterButton_Click(object sender, EventArgs e)
-        {
-            DateTime todayDate = DateTime.Now;
-            DateTime selectedDate = parameterHourlyDateTimePicker.Value;
-
-            if (checkDates(selectedDate, todayDate))
-            {
-                MessageBox.Show("Data superior ao dia atual");
-                return;
-            }
-
-            //TODO: validar se checkbox tem algum check
-            //check... check, check, check, fuck... check!
-
-            //String sDate = selectedDate.ToString("dd;MM;yyyy");
-            //String eDate = todayDate.ToString("dd;MM;yyyy");
-            //MessageBox.Show(sDate);
-            //MessageBox.Show(eDate);
-
-
-            HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, selectedDate);
-
-            foreach (HourlySummarizedValues values in list)
-            {
-                Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
-            }
-        }
-
-        public bool checkDates(DateTime startDate, DateTime endDate)
+        private bool checkDates(DateTime startDate, DateTime endDate)
         {
             return (startDate.Date > endDate.Date ? true : false);
         }
 
-        private void submitWeeklyParameterButton_Click(object sender, EventArgs e)
-        {
-
-            MessageBox.Show((weekComboBox.SelectedIndex + 1).ToString());
-            //MessageBox.Show(weeklyDateTimePicker.Value.Year.ToString());
-            /*CultureInfo myCI = new CultureInfo("en-US");
-            Calendar myCal = myCI.Calendar;
-
-            // Gets the DTFI properties required by GetWeekOfYear.
-            CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
-            DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
-
-            // Displays the total number of weeks in the current year.
-            DateTime LastDay = new System.DateTime(weeklyDateTimePicker.Value.Year, 12, 31);
-            MessageBox.Show("There are " + myCal.GetWeekOfYear(LastDay, myCWR, myFirstDOW) + " weeks in the current year " + LastDay.Year);
-
-            DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
-            DateTime currentDate = weeklyDateTimePicker.Value;
-            Calendar cal = dfi.Calendar;
-
-            MessageBox.Show(currentDate + " Week " + cal.GetWeekOfYear(currentDate, dfi.CalendarWeekRule, dfi.FirstDayOfWeek) + cal.ToString().Substring(cal.ToString().LastIndexOf(".") + 1));
-
-            int thisWeek = GetIso8601WeekOfYear(weeklyDateTimePicker.Value);
-            DateTime firstDayOfWeek = FirstDateOfWeek(currentDate.Year, thisWeek, CultureInfo.CurrentCulture);
-            DateTime lastDayOfWek = firstDayOfWeek.AddDays(6);
-
-
-            MessageBox.Show(firstDayOfWeek.ToString());
-            MessageBox.Show(lastDayOfWek.ToString());*/
-        }
-
-        /*public static int GetIso8601WeekOfYear(DateTime time)
-        {
-            DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(time);
-            if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
-            {
-                time = time.AddDays(3);
-            }
-
-            return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-        }
-
-        public static DateTime FirstDateOfWeek(int year, int weekOfYear, System.Globalization.CultureInfo ci)
-        {
-            DateTime jan1 = new DateTime(year, 1, 1);
-            int daysOffset = (int)ci.DateTimeFormat.FirstDayOfWeek - (int)jan1.DayOfWeek;
-            DateTime firstWeekDay = jan1.AddDays(daysOffset);
-            int firstWeek = ci.Calendar.GetWeekOfYear(jan1, ci.DateTimeFormat.CalendarWeekRule, ci.DateTimeFormat.FirstDayOfWeek);
-            if ((firstWeek <= 1 || firstWeek >= 52) && daysOffset >= -3)
-            {
-                weekOfYear -= 1;
-            }
-            return firstWeekDay.AddDays(weekOfYear * 7);
-        }*/
 
         private void weeklyDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
