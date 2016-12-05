@@ -33,7 +33,7 @@ namespace SmartH2O_SeeApp
             HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
 
             //TODO: validar se a lista esta vazia..
-            //Console.WriteLine("Testing service!!!!!!!!!!!!!!!!!!!!!!!!!! __>>>>>" + list[0].Averange + "<<<<<<");
+            //Console.WriteLine("Testing service!!!!!!!!!!!!SERRA!!!!!!!!!!!!!! __>>>>>" + list[0].Averange + "<<<<<<");
 
             AlarmData[] list2 = smartH2OClient.getDailyAlarmsInformation();
 
