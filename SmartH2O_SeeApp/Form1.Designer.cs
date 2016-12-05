@@ -507,7 +507,6 @@
             this.label11.Size = new System.Drawing.Size(70, 13);
             this.label11.TabIndex = 3;
             this.label11.Text = "Select a date";
-            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // dateTimePickerDateGraph
             // 
