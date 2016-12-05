@@ -53,7 +53,6 @@
             this.weeklyDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.button3 = new System.Windows.Forms.Button();
             this.parametersCheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.listView1 = new System.Windows.Forms.ListView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -64,6 +63,7 @@
             this.fromAlarmsDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.listView2 = new System.Windows.Forms.ListView();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.listBoxParametersValues = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -87,10 +87,10 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.listBoxParametersValues);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.tabControl2);
             this.tabPage1.Controls.Add(this.parametersCheckedListBox);
-            this.tabPage1.Controls.Add(this.listView1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -319,14 +319,6 @@
             this.parametersCheckedListBox.Size = new System.Drawing.Size(58, 49);
             this.parametersCheckedListBox.TabIndex = 11;
             // 
-            // listView1
-            // 
-            this.listView1.Location = new System.Drawing.Point(17, 172);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(558, 365);
-            this.listView1.TabIndex = 5;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.label7);
@@ -427,6 +419,14 @@
             this.tabPage6.Text = "Graphicall Information";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
+            // listBoxParametersValues
+            // 
+            this.listBoxParametersValues.FormattingEnabled = true;
+            this.listBoxParametersValues.Location = new System.Drawing.Point(9, 175);
+            this.listBoxParametersValues.Name = "listBoxParametersValues";
+            this.listBoxParametersValues.Size = new System.Drawing.Size(562, 355);
+            this.listBoxParametersValues.TabIndex = 14;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -458,7 +458,6 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.CheckedListBox parametersCheckedListBox;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage3;
@@ -490,6 +489,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ListBox listBoxParametersValues;
     }
 }
 
