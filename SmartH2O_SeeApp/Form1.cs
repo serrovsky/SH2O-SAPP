@@ -54,14 +54,6 @@ namespace SmartH2O_SeeApp
             parametersCheckedListBox.SetItemChecked(1, true);
             parametersCheckedListBox.SetItemChecked(2, true);
 
-            /*
-            listViewParametersValues.Columns.Add("Parameter", -2, HorizontalAlignment.Left);
-            listViewParametersValues.Columns.Add("Value", -2, HorizontalAlignment.Left);
-            listViewParametersValues.Columns.Add("Date", -2, HorizontalAlignment.Left);
-            listViewParametersValues.Columns.Add("Time", -2, HorizontalAlignment.Left);
-            listViewParametersValues.View = View.Details;
-            */
-
         }
 
         private void optionsAlarmsComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -75,7 +67,7 @@ namespace SmartH2O_SeeApp
             }
             if (optionsAlarmsComboBox.SelectedIndex == 0)
             {
-                fromAlarmsDateTimePicker.Enabled = false;
+                fromAlarmsDateTimePicker.Enabled = true;
                 toAlarmsDateTimePicker.Enabled = false;
             }
         }
@@ -94,7 +86,7 @@ namespace SmartH2O_SeeApp
 
             if (checkDates(selectedDate, todayDate))
             {
-                MessageBox.Show("PLEASE CHECK THE DATES (SELECTEDDATE <= TODAY ");
+                MessageBox.Show("PLEASE CHECK THE DATES (SELECTEDDATE <= TODAY)");
                 return;
             }
 
@@ -142,6 +134,13 @@ namespace SmartH2O_SeeApp
 
             if (optionsAlarmsComboBox.SelectedIndex == 0)
             {
+                DateTime startDate = fromAlarmsDateTimePicker.Value;
+                DateTime todayDate = DateTime.Now;
+                if (checkDates(startDate, todayDate))
+                {
+                    MessageBox.Show("PLEASE CHECK THE DATES (SELECTEDDATE <= TODAY)");
+                    return;
+                }
                 //chamar o metodo do servico com (PH)
                 //chamar o metodo do servico com (NH3)
                 //chamar o metodo do servico com (CI2)
@@ -151,6 +150,13 @@ namespace SmartH2O_SeeApp
             {
                 DateTime startDate = fromAlarmsDateTimePicker.Value;
                 DateTime endDate = toAlarmsDateTimePicker.Value;
+                DateTime todayDate = DateTime.Now;
+
+                if (checkDates(startDate, todayDate) || checkDates(endDate, todayDate))
+                {
+                    MessageBox.Show("Check the dates order STARTDATE OR ENDDATE < TODAY");
+                    return;
+                }
 
                 if (checkDates(startDate, endDate))
                 {
