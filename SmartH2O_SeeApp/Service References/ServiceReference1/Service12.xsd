@@ -16,15 +16,33 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="getDailySummarizedByDataInterval">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="parameter" type="q3:ParameterType" />
+        <xs:element minOccurs="0" name="startingDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="endingDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getDailySummarizedByDataIntervalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="getDailySummarizedByDataIntervalResult" nillable="true" type="q4:ArrayOfDailySummarizedValues" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="getDailyAlarmsInformation">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="date" type="xs:dateTime" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="getDailyAlarmsInformationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="getDailyAlarmsInformationResult" nillable="true" type="q3:ArrayOfAlarmData" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="getDailyAlarmsInformationResult" nillable="true" type="q5:ArrayOfAlarmData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

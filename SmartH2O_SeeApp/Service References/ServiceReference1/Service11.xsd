@@ -4,7 +4,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="PH" />
       <xs:enumeration value="CI2" />
-      <xs:enumeration value="H3" />
+      <xs:enumeration value="NH3" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="ParameterType" nillable="true" type="tns:ParameterType" />
@@ -20,9 +20,26 @@
       <xs:element minOccurs="0" name="Hour" type="xs:float" />
       <xs:element minOccurs="0" name="Max" type="xs:float" />
       <xs:element minOccurs="0" name="Min" type="xs:float" />
+      <xs:element minOccurs="0" name="Parameter" type="tns:ParameterType" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="HourlySummarizedValues" nillable="true" type="tns:HourlySummarizedValues" />
+  <xs:complexType name="ArrayOfDailySummarizedValues">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DailySummarizedValues" nillable="true" type="tns:DailySummarizedValues" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDailySummarizedValues" nillable="true" type="tns:ArrayOfDailySummarizedValues" />
+  <xs:complexType name="DailySummarizedValues">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Averange" type="xs:float" />
+      <xs:element minOccurs="0" name="DayDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Max" type="xs:float" />
+      <xs:element minOccurs="0" name="Min" type="xs:float" />
+      <xs:element minOccurs="0" name="Parameter" type="tns:ParameterType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DailySummarizedValues" nillable="true" type="tns:DailySummarizedValues" />
   <xs:complexType name="ArrayOfAlarmData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="AlarmData" nillable="true" type="tns:AlarmData" />

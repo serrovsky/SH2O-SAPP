@@ -96,6 +96,9 @@
     <None Include="Service References\ServiceReference1\SmartH2O_SeeApp.ServiceReference1.AlarmData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference1\SmartH2O_SeeApp.ServiceReference1.DailySummarizedValues.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference1\SmartH2O_SeeApp.ServiceReference1.HourlySummarizedValues.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

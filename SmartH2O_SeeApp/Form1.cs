@@ -27,7 +27,6 @@ namespace SmartH2O_SeeApp
 
         private void initializeService()
         {
-            /*
             smartH2OClient = new ServiceSmartH2OClient(); //TODO: acho que esta incompleto..neve precisar de mais alguma coisa quando o servico nao for local..
 
             HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
@@ -35,10 +34,10 @@ namespace SmartH2O_SeeApp
             //TODO: validar se a lista esta vazia..
             //Console.WriteLine("Testing service!!!!!!!!!!!!JP!!!!!!!! __>>>>>" + list[0].Averange + "<<<<<<");
 
-            AlarmData[] list2 = smartH2OClient.getDailyAlarmsInformation();
-            mais um test
+            //AlarmData[] list2 = smartH2OClient.getDailyAlarmsInformation();
+
             Console.WriteLine("STEP 3");
-            */
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -99,30 +98,39 @@ namespace SmartH2O_SeeApp
                 return;
             }
 
+            List<HourlySummarizedValues> list = new List<HourlySummarizedValues>();
+
             if (parametersCheckedListBox.GetItemChecked(0))
             {
-                //chamar o metodo do servico com (selectedDate, PH)
-
-                HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, selectedDate);
-
-                //TODO: validar se ficheiro vazio
-
-                foreach (HourlySummarizedValues values in list)
-                {
-                    Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
-                    listBoxParametersValues.Items.Add("Parameter Type: PH | Hour: " + values.Hour + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
-                }
-
-
+                //chamar o metodo do servico com (selectedDate, PH
+                list.AddRange(smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, selectedDate));
             }
             if (parametersCheckedListBox.GetItemChecked(1))
             {
                 //chamar o metodo do servico com (selectedDate, NH3)
+                list.AddRange(smartH2OClient.getHourlySummarizedByDay(ParameterType.NH3, selectedDate));
             }
             if (parametersCheckedListBox.GetItemChecked(2))
             {
                 //chamar o metodo do servico com (selectedDate, CI2)
+                list.AddRange(smartH2OClient.getHourlySummarizedByDay(ParameterType.CI2, selectedDate));
             }
+
+            //TODO: validar se lista vazia
+            //Se a data nao der resultado, nao chega lista para ser apanhado por este if.. confimar..
+
+            if (list.Count == 0)
+            {
+                listBoxParametersValues.Items.Add("Não existem resultados");
+                return;
+            }
+
+            foreach (HourlySummarizedValues values in list)
+            {
+                //Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
+                listBoxParametersValues.Items.Add("Parameter Type: " + values.Parameter.ToString() + " | Hour: " + values.Hour + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
+            }
+
         }
 
         private void submitAlarmsButton_Click(object sender, EventArgs e)
@@ -158,6 +166,8 @@ namespace SmartH2O_SeeApp
 
         private void submitDailyParameterButton_Click(object sender, EventArgs e)
         {
+            listBoxParametersValues.Items.Clear();
+
             if (checkIfAreNoItemsSelected())
             {
                 return;
@@ -179,18 +189,35 @@ namespace SmartH2O_SeeApp
                 return;
             }
 
+            List<DailySummarizedValues> list = new List<DailySummarizedValues>();
+
+
+            //TODO: testar melhor com melhores datas
             if (parametersCheckedListBox.GetItemChecked(0))
             {
+                list.AddRange(smartH2OClient.getDailySummarizedByDataInterval(ParameterType.PH, startDate, endDate));
                 //chamar o metodo do servico com (startDate, endDate, PH)
             }
             if (parametersCheckedListBox.GetItemChecked(1))
             {
                 //chamar o metodo do servico com (startDate, endDate, NH3)
+                list.AddRange(smartH2OClient.getDailySummarizedByDataInterval(ParameterType.NH3, startDate, endDate));
             }
             if (parametersCheckedListBox.GetItemChecked(2))
             {
                 //chamar o metodo do servico com (startDate, endDate, CI2)
+                list.AddRange(smartH2OClient.getDailySummarizedByDataInterval(ParameterType.CI2, startDate, endDate));
             }
+
+
+            foreach (DailySummarizedValues values in list)
+            {
+                //Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
+                listBoxParametersValues.Items.Add("Parameter Type: " + values.Parameter.ToString() + " | Date: " + values.DayDate.ToString("dd/MM/yyyy") + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
+            }
+
+
+
         }
 
         private void submitWeeklyParameterButton_Click(object sender, EventArgs e)
