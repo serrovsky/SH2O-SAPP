@@ -132,7 +132,9 @@ namespace SmartH2O_SeeApp
                 return;
             }
 
-            if (optionsAlarmsComboBox.SelectedIndex == 0)
+            List<AlarmData> list = new List<AlarmData>();
+
+            if (optionsAlarmsComboBox.SelectedIndex == 0) // selecionou dia especifico
             {
                 DateTime startDate = fromAlarmsDateTimePicker.Value;
                 DateTime todayDate = DateTime.Now;
@@ -144,9 +146,14 @@ namespace SmartH2O_SeeApp
                 //chamar o metodo do servico com (PH)
                 //chamar o metodo do servico com (NH3)
                 //chamar o metodo do servico com (CI2)
-                return;
+
+                //TODO: prof
+                //{"The maximum message size quota for incoming messages (65536) has been exceeded. To increase the quota, use the MaxReceivedMessageSize property on the appropriate binding element."}
+                // esta linha da este erro caso o ficheiro seja muito grande.. como Resolver??
+                list.AddRange(smartH2OClient.getDailyAlarmsInformation(startDate));
+
             }
-            else if (optionsAlarmsComboBox.SelectedIndex == 1)
+            else if (optionsAlarmsComboBox.SelectedIndex == 1) // selecionou intervalo de dias
             {
                 DateTime startDate = fromAlarmsDateTimePicker.Value;
                 DateTime endDate = toAlarmsDateTimePicker.Value;
@@ -167,7 +174,19 @@ namespace SmartH2O_SeeApp
                 //chamar o metodo do servico com (startDate, endDate, PH)
                 //chamar o metodo do servico com (startDate, endDate, NH3)
                 //chamar o metodo do servico com (startDate, endDate, CI2)
+                list.AddRange(smartH2OClient.getAlarmsInformationByDataInterval(startDate, endDate));
             }
+
+
+            Debug.WriteLine("/t/t/t/t ListCount: " + list.Count);
+            //TODO: Se tiver tempo
+            //Completar data com horas e minutos e mostrar.. Fica com melhor aspecto
+            foreach (AlarmData alarmData in list)
+            {
+                //Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
+                listBoxAlarms.Items.Add("Parameter Type: " + alarmData.ParameterType.ToString() + " | Value: " + alarmData.Parametervalue + " | Alarm Description: " + alarmData.AlarmDescription + " | Date: " + alarmData.Date.ToString("dd/MM/yyyy"));
+            }
+
         }
 
         private void submitDailyParameterButton_Click(object sender, EventArgs e)
@@ -215,19 +234,19 @@ namespace SmartH2O_SeeApp
                 list.AddRange(smartH2OClient.getDailySummarizedByDataInterval(ParameterType.CI2, startDate, endDate));
             }
 
-
+            //TODO: ENVIAR FAULTS SE NAO EXISTIREM RESULTADOS
             foreach (DailySummarizedValues values in list)
             {
                 //Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
                 listBoxParametersValues.Items.Add("Parameter Type: " + values.Parameter.ToString() + " | Date: " + values.DayDate.ToString("dd/MM/yyyy") + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
             }
 
-
-
         }
 
         private void submitWeeklyParameterButton_Click(object sender, EventArgs e)
         {
+            listBoxParametersValues.Items.Clear();
+
             if (checkIfAreNoItemsSelected())
             {
                 return;
@@ -242,17 +261,27 @@ namespace SmartH2O_SeeApp
             int year = weeklyDateTimePicker.Value.Year;
             int selectedWeek = weekComboBox.SelectedIndex + 1;
 
+            List<WeeklySummarizedValues> list = new List<WeeklySummarizedValues>();
+
             if (parametersCheckedListBox.GetItemChecked(0))
             {
                 //chamar o metodo do servico com (selectedWeek, year, PH)
+                list.AddRange(smartH2OClient.getWeeklySummarizedByDataInterval(ParameterType.PH, selectedWeek, year));
             }
             if (parametersCheckedListBox.GetItemChecked(1))
             {
                 //chamar o metodo do servico com (selectedWeek, year, NH3)
+                list.AddRange(smartH2OClient.getWeeklySummarizedByDataInterval(ParameterType.NH3, selectedWeek, year));
             }
             if (parametersCheckedListBox.GetItemChecked(2))
             {
                 //chamar o metodo do servico com (selectedWeek, year, CI2)
+                list.AddRange(smartH2OClient.getWeeklySummarizedByDataInterval(ParameterType.CI2, selectedWeek, year));
+            }
+
+            foreach (WeeklySummarizedValues values in list)
+            {
+                listBoxParametersValues.Items.Add("Parameter Type: " + values.Parameter.ToString() + " | Week: " + values.WeekNumber + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
             }
         }
 

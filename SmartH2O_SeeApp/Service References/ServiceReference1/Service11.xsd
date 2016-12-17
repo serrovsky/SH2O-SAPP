@@ -40,6 +40,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DailySummarizedValues" nillable="true" type="tns:DailySummarizedValues" />
+  <xs:complexType name="ArrayOfWeeklySummarizedValues">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WeeklySummarizedValues" nillable="true" type="tns:WeeklySummarizedValues" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWeeklySummarizedValues" nillable="true" type="tns:ArrayOfWeeklySummarizedValues" />
+  <xs:complexType name="WeeklySummarizedValues">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Averange" type="xs:float" />
+      <xs:element minOccurs="0" name="Max" type="xs:float" />
+      <xs:element minOccurs="0" name="Min" type="xs:float" />
+      <xs:element minOccurs="0" name="Parameter" type="tns:ParameterType" />
+      <xs:element minOccurs="0" name="WeekNumber" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WeeklySummarizedValues" nillable="true" type="tns:WeeklySummarizedValues" />
   <xs:complexType name="ArrayOfAlarmData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="AlarmData" nillable="true" type="tns:AlarmData" />

@@ -247,6 +247,115 @@ namespace SmartH2O_SeeApp.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WeeklySummarizedValues", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
+    [System.SerializableAttribute()]
+    public partial class WeeklySummarizedValues : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private float AverangeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private float MaxField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private float MinField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private SmartH2O_SeeApp.ServiceReference1.ParameterType ParameterField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int WeekNumberField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float Averange {
+            get {
+                return this.AverangeField;
+            }
+            set {
+                if ((this.AverangeField.Equals(value) != true)) {
+                    this.AverangeField = value;
+                    this.RaisePropertyChanged("Averange");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float Max {
+            get {
+                return this.MaxField;
+            }
+            set {
+                if ((this.MaxField.Equals(value) != true)) {
+                    this.MaxField = value;
+                    this.RaisePropertyChanged("Max");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float Min {
+            get {
+                return this.MinField;
+            }
+            set {
+                if ((this.MinField.Equals(value) != true)) {
+                    this.MinField = value;
+                    this.RaisePropertyChanged("Min");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public SmartH2O_SeeApp.ServiceReference1.ParameterType Parameter {
+            get {
+                return this.ParameterField;
+            }
+            set {
+                if ((this.ParameterField.Equals(value) != true)) {
+                    this.ParameterField = value;
+                    this.RaisePropertyChanged("Parameter");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int WeekNumber {
+            get {
+                return this.WeekNumberField;
+            }
+            set {
+                if ((this.WeekNumberField.Equals(value) != true)) {
+                    this.WeekNumberField = value;
+                    this.RaisePropertyChanged("WeekNumber");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AlarmData", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
     [System.SerializableAttribute()]
     public partial class AlarmData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -370,6 +479,12 @@ namespace SmartH2O_SeeApp.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataInterval", ReplyAction="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataIntervalResponse")]
         System.Threading.Tasks.Task<SmartH2O_SeeApp.ServiceReference1.DailySummarizedValues[]> getDailySummarizedByDataIntervalAsync(SmartH2O_SeeApp.ServiceReference1.ParameterType parameter, System.DateTime startingDate, System.DateTime endingDate);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedByDataInterval", ReplyAction="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedByDataIntervalResponse")]
+        SmartH2O_SeeApp.ServiceReference1.WeeklySummarizedValues[] getWeeklySummarizedByDataInterval(SmartH2O_SeeApp.ServiceReference1.ParameterType parameter, int weekNumber, int year);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedByDataInterval", ReplyAction="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedByDataIntervalResponse")]
+        System.Threading.Tasks.Task<SmartH2O_SeeApp.ServiceReference1.WeeklySummarizedValues[]> getWeeklySummarizedByDataIntervalAsync(SmartH2O_SeeApp.ServiceReference1.ParameterType parameter, int weekNumber, int year);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformation", ReplyAction="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformationResponse")]
         SmartH2O_SeeApp.ServiceReference1.AlarmData[] getDailyAlarmsInformation(System.DateTime date);
         
@@ -418,6 +533,14 @@ namespace SmartH2O_SeeApp.ServiceReference1 {
         
         public System.Threading.Tasks.Task<SmartH2O_SeeApp.ServiceReference1.DailySummarizedValues[]> getDailySummarizedByDataIntervalAsync(SmartH2O_SeeApp.ServiceReference1.ParameterType parameter, System.DateTime startingDate, System.DateTime endingDate) {
             return base.Channel.getDailySummarizedByDataIntervalAsync(parameter, startingDate, endingDate);
+        }
+        
+        public SmartH2O_SeeApp.ServiceReference1.WeeklySummarizedValues[] getWeeklySummarizedByDataInterval(SmartH2O_SeeApp.ServiceReference1.ParameterType parameter, int weekNumber, int year) {
+            return base.Channel.getWeeklySummarizedByDataInterval(parameter, weekNumber, year);
+        }
+        
+        public System.Threading.Tasks.Task<SmartH2O_SeeApp.ServiceReference1.WeeklySummarizedValues[]> getWeeklySummarizedByDataIntervalAsync(SmartH2O_SeeApp.ServiceReference1.ParameterType parameter, int weekNumber, int year) {
+            return base.Channel.getWeeklySummarizedByDataIntervalAsync(parameter, weekNumber, year);
         }
         
         public SmartH2O_SeeApp.ServiceReference1.AlarmData[] getDailyAlarmsInformation(System.DateTime date) {

@@ -58,6 +58,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.parametersCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.listBoxAlarms = new System.Windows.Forms.ListBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.From = new System.Windows.Forms.Label();
@@ -65,7 +66,6 @@
             this.submitAlarmsButton = new System.Windows.Forms.Button();
             this.toAlarmsDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.fromAlarmsDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.listView2 = new System.Windows.Forms.ListView();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -344,6 +344,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.listBoxAlarms);
             this.tabPage2.Controls.Add(this.label7);
             this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.From);
@@ -351,7 +352,6 @@
             this.tabPage2.Controls.Add(this.submitAlarmsButton);
             this.tabPage2.Controls.Add(this.toAlarmsDateTimePicker);
             this.tabPage2.Controls.Add(this.fromAlarmsDateTimePicker);
-            this.tabPage2.Controls.Add(this.listView2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -359,6 +359,14 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Parameters Alarms";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // listBoxAlarms
+            // 
+            this.listBoxAlarms.FormattingEnabled = true;
+            this.listBoxAlarms.Location = new System.Drawing.Point(28, 113);
+            this.listBoxAlarms.Name = "listBoxAlarms";
+            this.listBoxAlarms.Size = new System.Drawing.Size(541, 420);
+            this.listBoxAlarms.TabIndex = 8;
             // 
             // label7
             // 
@@ -424,14 +432,6 @@
             this.fromAlarmsDateTimePicker.Name = "fromAlarmsDateTimePicker";
             this.fromAlarmsDateTimePicker.Size = new System.Drawing.Size(200, 20);
             this.fromAlarmsDateTimePicker.TabIndex = 1;
-            // 
-            // listView2
-            // 
-            this.listView2.Location = new System.Drawing.Point(6, 100);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(564, 395);
-            this.listView2.TabIndex = 0;
-            this.listView2.UseCompatibleStateImageBehavior = false;
             // 
             // tabPage6
             // 
@@ -604,7 +604,6 @@
         private System.Windows.Forms.Button submitAlarmsButton;
         private System.Windows.Forms.DateTimePicker toAlarmsDateTimePicker;
         private System.Windows.Forms.DateTimePicker fromAlarmsDateTimePicker;
-        private System.Windows.Forms.ListView listView2;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox optionsAlarmsComboBox;
@@ -629,6 +628,7 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerYearGraph;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ListBox listBoxParametersValues;
+        private System.Windows.Forms.ListBox listBoxAlarms;
     }
 }
 

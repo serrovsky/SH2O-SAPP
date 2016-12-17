@@ -32,6 +32,22 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="getWeeklySummarizedByDataInterval">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="parameter" type="q5:ParameterType" />
+        <xs:element minOccurs="0" name="weekNumber" type="xs:int" />
+        <xs:element minOccurs="0" name="year" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getWeeklySummarizedByDataIntervalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="getWeeklySummarizedByDataIntervalResult" nillable="true" type="q6:ArrayOfWeeklySummarizedValues" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="getDailyAlarmsInformation">
     <xs:complexType>
       <xs:sequence>
@@ -42,7 +58,7 @@
   <xs:element name="getDailyAlarmsInformationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="getDailyAlarmsInformationResult" nillable="true" type="q5:ArrayOfAlarmData" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="getDailyAlarmsInformationResult" nillable="true" type="q7:ArrayOfAlarmData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

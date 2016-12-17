@@ -19,6 +19,12 @@
   <wsdl:message name="IServiceSmartH2O_getDailySummarizedByDataInterval_OutputMessage">
     <wsdl:part name="parameters" element="tns:getDailySummarizedByDataIntervalResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getWeeklySummarizedByDataInterval_InputMessage">
+    <wsdl:part name="parameters" element="tns:getWeeklySummarizedByDataInterval" />
+  </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getWeeklySummarizedByDataInterval_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getWeeklySummarizedByDataIntervalResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceSmartH2O_getDailyAlarmsInformation_InputMessage">
     <wsdl:part name="parameters" element="tns:getDailyAlarmsInformation" />
   </wsdl:message>
@@ -33,6 +39,10 @@
     <wsdl:operation name="getDailySummarizedByDataInterval">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataInterval" message="tns:IServiceSmartH2O_getDailySummarizedByDataInterval_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataIntervalResponse" message="tns:IServiceSmartH2O_getDailySummarizedByDataInterval_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getWeeklySummarizedByDataInterval">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedByDataInterval" message="tns:IServiceSmartH2O_getWeeklySummarizedByDataInterval_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedByDataIntervalResponse" message="tns:IServiceSmartH2O_getWeeklySummarizedByDataInterval_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="getDailyAlarmsInformation">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformation" message="tns:IServiceSmartH2O_getDailyAlarmsInformation_InputMessage" />
@@ -52,6 +62,15 @@
     </wsdl:operation>
     <wsdl:operation name="getDailySummarizedByDataInterval">
       <soap:operation soapAction="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataInterval" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getWeeklySummarizedByDataInterval">
+      <soap:operation soapAction="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedByDataInterval" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
