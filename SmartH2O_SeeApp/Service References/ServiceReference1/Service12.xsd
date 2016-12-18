@@ -62,4 +62,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="getAlarmsInformationByDataInterval">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="startingDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="endingDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getAlarmsInformationByDataIntervalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="getAlarmsInformationByDataIntervalResult" nillable="true" type="q8:ArrayOfAlarmData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

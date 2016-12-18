@@ -119,7 +119,6 @@ namespace SmartH2O_SeeApp
 
             foreach (HourlySummarizedValues values in list)
             {
-                //Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
                 listBoxParametersValues.Items.Add("Parameter Type: " + values.Parameter.ToString() + " | Hour: " + values.Hour + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
             }
 
@@ -127,6 +126,9 @@ namespace SmartH2O_SeeApp
 
         private void submitAlarmsButton_Click(object sender, EventArgs e)
         {
+
+            listBoxAlarms.Items.Clear();
+
             if (checkIfAreNoItemsSelected())
             {
                 return;
@@ -184,7 +186,7 @@ namespace SmartH2O_SeeApp
             foreach (AlarmData alarmData in list)
             {
                 //Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
-                listBoxAlarms.Items.Add("Parameter Type: " + alarmData.ParameterType.ToString() + " | Value: " + alarmData.Parametervalue + " | Alarm Description: " + alarmData.AlarmDescription + " | Date: " + alarmData.Date.ToString("dd/MM/yyyy"));
+                listBoxAlarms.Items.Add("Parameter Type: " + alarmData.ParameterType.ToString() + " | Value: " + alarmData.Parametervalue + " | Date: " + alarmData.Date.ToString("dd/MM/yyyy") + " | Alarm Description: " + alarmData.AlarmDescription);
             }
 
         }
@@ -285,7 +287,8 @@ namespace SmartH2O_SeeApp
             }
         }
 
-
+        //TODO: SERRA!!
+        // as listas das semanas estao erradas.. Uma semana não acaba e começa no mesmo dia
 
         private bool checkIfAreNoItemsSelected()
         {
@@ -386,5 +389,41 @@ namespace SmartH2O_SeeApp
             }
         }
 
+        private void submitGraphicallInformationButton_Click(object sender, EventArgs e)
+        {
+
+            // limpa grafico
+            foreach (var series in chart1.Series)
+            {
+                series.Points.Clear();
+            }
+
+            //TODO: validar quais a opçoes escolhidas..
+
+            DateTime date = dateTimePickerDateGraph.Value;
+
+            //TODO: alterar para daily
+            HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.CI2, date);
+
+            for (int i = 0; i < list.Length; i++)
+            {
+                //string name = i.ToString("D" + 2) + "h";
+                string name = list[i].Hour.ToString() + "h";
+                chart1.Series[2].Points.AddXY(name, list[i].Min);
+                chart1.Series[0].Points.AddXY(name, list[i].Max);
+                chart1.Series[1].Points.AddXY(name, list[i].Averange);
+
+                Console.WriteLine("Result parametro: " + list[i].Parameter.ToString());
+                Console.WriteLine("OUTPUT SMATH20_SEEAPP " + list[i].Averange);
+                Console.WriteLine("OUTPUT SMATH20_SEEAPP " + list[i].Min);
+                Console.WriteLine("OUTPUT SMATH20_SEEAPP " + list[i].Max);
+            }
+
+            /*
+            chart1.Series[0].Points.AddXY("50h", 50);
+            chart1.Series[1].Points.AddXY("50h", 80);
+            chart1.Series[2].Points.AddXY("50h", 60);
+            */
+        }
     }
 }

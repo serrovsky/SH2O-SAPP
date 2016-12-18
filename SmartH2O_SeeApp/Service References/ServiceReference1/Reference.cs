@@ -367,9 +367,6 @@ namespace SmartH2O_SeeApp.ServiceReference1 {
         private string AlarmDescriptionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private float AlarmValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime DateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -397,19 +394,6 @@ namespace SmartH2O_SeeApp.ServiceReference1 {
                 if ((object.ReferenceEquals(this.AlarmDescriptionField, value) != true)) {
                     this.AlarmDescriptionField = value;
                     this.RaisePropertyChanged("AlarmDescription");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public float AlarmValue {
-            get {
-                return this.AlarmValueField;
-            }
-            set {
-                if ((this.AlarmValueField.Equals(value) != true)) {
-                    this.AlarmValueField = value;
-                    this.RaisePropertyChanged("AlarmValue");
                 }
             }
         }
@@ -490,6 +474,12 @@ namespace SmartH2O_SeeApp.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformation", ReplyAction="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformationResponse")]
         System.Threading.Tasks.Task<SmartH2O_SeeApp.ServiceReference1.AlarmData[]> getDailyAlarmsInformationAsync(System.DateTime date);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataInterval", ReplyAction="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataIntervalResponse")]
+        SmartH2O_SeeApp.ServiceReference1.AlarmData[] getAlarmsInformationByDataInterval(System.DateTime startingDate, System.DateTime endingDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataInterval", ReplyAction="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataIntervalResponse")]
+        System.Threading.Tasks.Task<SmartH2O_SeeApp.ServiceReference1.AlarmData[]> getAlarmsInformationByDataIntervalAsync(System.DateTime startingDate, System.DateTime endingDate);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -549,6 +539,14 @@ namespace SmartH2O_SeeApp.ServiceReference1 {
         
         public System.Threading.Tasks.Task<SmartH2O_SeeApp.ServiceReference1.AlarmData[]> getDailyAlarmsInformationAsync(System.DateTime date) {
             return base.Channel.getDailyAlarmsInformationAsync(date);
+        }
+        
+        public SmartH2O_SeeApp.ServiceReference1.AlarmData[] getAlarmsInformationByDataInterval(System.DateTime startingDate, System.DateTime endingDate) {
+            return base.Channel.getAlarmsInformationByDataInterval(startingDate, endingDate);
+        }
+        
+        public System.Threading.Tasks.Task<SmartH2O_SeeApp.ServiceReference1.AlarmData[]> getAlarmsInformationByDataIntervalAsync(System.DateTime startingDate, System.DateTime endingDate) {
+            return base.Channel.getAlarmsInformationByDataIntervalAsync(startingDate, endingDate);
         }
     }
 }

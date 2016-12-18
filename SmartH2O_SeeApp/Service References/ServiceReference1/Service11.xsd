@@ -65,7 +65,6 @@
   <xs:complexType name="AlarmData">
     <xs:sequence>
       <xs:element minOccurs="0" name="AlarmDescription" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="AlarmValue" type="xs:float" />
       <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ParameterType" type="tns:ParameterType" />
       <xs:element minOccurs="0" name="Parametervalue" type="xs:float" />
