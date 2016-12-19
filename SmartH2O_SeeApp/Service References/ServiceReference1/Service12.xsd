@@ -32,7 +32,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="getWeeklySummarizedByDataInterval">
+  <xs:element name="getWeeklySummarized">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="parameter" type="q5:ParameterType" />
@@ -41,10 +41,10 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="getWeeklySummarizedByDataIntervalResponse">
+  <xs:element name="getWeeklySummarizedResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="getWeeklySummarizedByDataIntervalResult" nillable="true" type="q6:ArrayOfWeeklySummarizedValues" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SmartH2O_Service" minOccurs="0" name="getWeeklySummarizedResult" nillable="true" type="q6:WeeklySummarizedValues" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
