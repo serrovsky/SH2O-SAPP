@@ -29,7 +29,7 @@ namespace SmartH2O_SeeApp
         {
             smartH2OClient = new ServiceSmartH2OClient(); //TODO: acho que esta incompleto..neve precisar de mais alguma coisa quando o servico nao for local..
 
-            HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
+            // HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
 
             //TODO: validar se a lista esta vazia..
             //Console.WriteLine("Testing service!!!!!!!!!!!!JP!!!!!!!! __>>>>>" + list[0].Averange + "<<<<<<");
@@ -53,7 +53,6 @@ namespace SmartH2O_SeeApp
             parametersCheckedListBox.SetItemChecked(0, true);
             parametersCheckedListBox.SetItemChecked(1, true);
             parametersCheckedListBox.SetItemChecked(2, true);
-
         }
 
         private void optionsAlarmsComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -334,9 +333,11 @@ namespace SmartH2O_SeeApp
                 });
 
             weekComboBox.Items.Clear();
+            weekGraphComboBox.Items.Clear();
             foreach (var week in weeks)
             {
                 weekComboBox.Items.Add("Semana nº " + week.weekNum + " de " + week.weekStart.ToShortDateString() + " a " + week.weekFinish.ToShortDateString());
+                weekGraphComboBox.Items.Add("Semana nº " + week.weekNum + " de " + week.weekStart.ToShortDateString() + " a " + week.weekFinish.ToShortDateString());
             }
         }
 
@@ -353,6 +354,7 @@ namespace SmartH2O_SeeApp
                 weekGraphComboBox.Enabled = true;
                 dateTimePickerDateGraph.Enabled = false;
                 dateTimePickerYearGraph.Enabled = true;
+                // weekGraphComboBox.Items.Add();
             }
         }
 
@@ -366,7 +368,7 @@ namespace SmartH2O_SeeApp
                 .Range(0, 54)
                 .Select(i => new
                 {
-                    weekStart = startOfFirstWeek.AddDays(i * 7)
+                    weekStart = startOfFirstWeek.AddDays(i * 6)
                 })
                 .TakeWhile(x => x.weekStart.Year <= jan1.Year)
                 .Select(x => new
