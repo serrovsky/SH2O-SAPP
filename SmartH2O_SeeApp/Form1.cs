@@ -64,6 +64,7 @@ namespace SmartH2O_SeeApp
         private void inicializeComponents(object sender, EventArgs e)
         {
             weeklyDateTimePicker_ValueChanged(sender, e);
+            dateTimePickerYearGraph_ValueChanged(sender, e);
             optionsAlarmsComboBox.SelectedIndex = 0;
             periodGraphicallComboBox.SelectedIndex = 0;
             parametersCheckedListBox.SetItemChecked(0, true);
@@ -349,9 +350,6 @@ namespace SmartH2O_SeeApp
             }
         }
 
-        //TODO: SERRA!!
-        // as listas das semanas estao erradas.. Uma semana não acaba e começa no mesmo dia
-
         private bool checkIfAreNoItemsSelected()
         {
             if (parametersCheckedListBox.CheckedItems.Count == 0)
@@ -370,9 +368,51 @@ namespace SmartH2O_SeeApp
 
         private void weeklyDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
-            DateTime jan1 = new DateTime(weeklyDateTimePicker.Value.Year, 1, 1);
+            List<string> weeks = getWeekNumbers();
+
+            weekComboBox.Items.Clear();
+            foreach (var week in weeks)
+            {
+                weekComboBox.Items.Add(week);
+            }
+        }
+
+        private void periodGraphicallComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (periodGraphicallComboBox.SelectedIndex == 0)
+            {
+                weekGraphComboBox.Enabled = false;
+                dateTimePickerDateGraph.Enabled = true;
+                dateTimePickerYearGraph.Enabled = false;
+            }
+            else if (periodGraphicallComboBox.SelectedIndex == 1)
+            {
+                weekGraphComboBox.Enabled = true;
+                dateTimePickerDateGraph.Enabled = false;
+                dateTimePickerYearGraph.Enabled = true;
+            }
+        }
+
+        private void dateTimePickerYearGraph_ValueChanged(object sender, EventArgs e)
+        {
+            List<String> weeks = getWeekNumbers();
+            weekGraphComboBox.Items.Clear();
+            foreach (var week in weeks)
+            {
+                weekGraphComboBox.Items.Add(week);
+            }
+        }
+
+        private List<string> getWeekNumbers()
+        {
+            List<String> weeksList = new List<string>();
+
+
+            DateTime jan1 = new DateTime(dateTimePickerYearGraph.Value.Year, 1, 1);
             //beware different cultures, see other answers
             DateTime startOfFirstWeek = jan1.AddDays(1 - (int)(jan1.DayOfWeek));
+
+
             var weeks =
             Enumerable
                 .Range(0, 54)
@@ -394,67 +434,24 @@ namespace SmartH2O_SeeApp
                     weekNum = i + 1
                 });
 
-            weekComboBox.Items.Clear();
-            weekGraphComboBox.Items.Clear();
             foreach (var week in weeks)
             {
-                weekComboBox.Items.Add("Semana nº " + week.weekNum + " de " + week.weekStart.ToShortDateString() + " a " + week.weekFinish.ToShortDateString());
-                weekGraphComboBox.Items.Add("Semana nº " + week.weekNum + " de " + week.weekStart.ToShortDateString() + " a " + week.weekFinish.ToShortDateString());
+                weeksList.Add("Semana nº " + week.weekNum + " de " + week.weekStart.ToShortDateString() + " a " + week.weekFinish.ToShortDateString());
             }
-        }
 
-        private void periodGraphicallComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (periodGraphicallComboBox.SelectedIndex == 0)
-            {
-                weekGraphComboBox.Enabled = false;
-                dateTimePickerDateGraph.Enabled = true;
-                dateTimePickerYearGraph.Enabled = false;
-            }
-            else if (periodGraphicallComboBox.SelectedIndex == 1)
-            {
-                weekGraphComboBox.Enabled = true;
-                dateTimePickerDateGraph.Enabled = false;
-                dateTimePickerYearGraph.Enabled = true;
-                // weekGraphComboBox.Items.Add();
-            }
-        }
-
-        private void dateTimePickerYearGraph_ValueChanged(object sender, EventArgs e)
-        {
-            DateTime jan1 = new DateTime(dateTimePickerYearGraph.Value.Year, 1, 1);
-            //beware different cultures, see other answers
-            DateTime startOfFirstWeek = jan1.AddDays(1 - (int)(jan1.DayOfWeek));
-            var weeks =
-            Enumerable
-                .Range(0, 54)
-                .Select(i => new
-                {
-                    weekStart = startOfFirstWeek.AddDays(i * 6)
-                })
-                .TakeWhile(x => x.weekStart.Year <= jan1.Year)
-                .Select(x => new
-                {
-                    x.weekStart,
-                    weekFinish = x.weekStart.AddDays(7)
-                })
-                .SkipWhile(x => x.weekFinish < jan1.AddDays(1))
-                .Select((x, i) => new
-                {
-                    x.weekStart,
-                    x.weekFinish,
-                    weekNum = i + 1
-                });
-
-            weekGraphComboBox.Items.Clear();
-            foreach (var week in weeks)
-            {
-                weekGraphComboBox.Items.Add("Semana nº " + week.weekNum + " de " + week.weekStart.ToShortDateString() + " a " + week.weekFinish.ToShortDateString());
-            }
+            return weeksList;
         }
 
         private void submitGraphicallInformationButton_Click(object sender, EventArgs e)
         {
+            if (weekGraphComboBox.SelectedIndex < 0)
+            {
+                MessageBox.Show("Must select a week");
+                return;
+            }
+
+            int selectedYear = dateTimePickerYearGraph.Value.Year;
+            int selectedWeek = weekGraphComboBox.SelectedIndex + 1;
 
             // limpa grafico
             foreach (var series in chart1.Series)
