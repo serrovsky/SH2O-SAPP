@@ -15,15 +15,42 @@
   </xs:complexType>
   <xs:element name="ArrayOfHourlySummarizedValues" nillable="true" type="tns:ArrayOfHourlySummarizedValues" />
   <xs:complexType name="HourlySummarizedValues">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SummarizedValues">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Hour" type="xs:float" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HourlySummarizedValues" nillable="true" type="tns:HourlySummarizedValues" />
+  <xs:complexType name="SummarizedValues">
     <xs:sequence>
       <xs:element minOccurs="0" name="Averange" type="xs:float" />
-      <xs:element minOccurs="0" name="Hour" type="xs:float" />
       <xs:element minOccurs="0" name="Max" type="xs:float" />
       <xs:element minOccurs="0" name="Min" type="xs:float" />
       <xs:element minOccurs="0" name="Parameter" type="tns:ParameterType" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="HourlySummarizedValues" nillable="true" type="tns:HourlySummarizedValues" />
+  <xs:element name="SummarizedValues" nillable="true" type="tns:SummarizedValues" />
+  <xs:complexType name="Fault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Descricao" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Fault" nillable="true" type="tns:Fault" />
+  <xs:complexType name="FoundNoResultsException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FoundNoResultsException" nillable="true" type="tns:FoundNoResultsException" />
+  <xs:complexType name="InternalErrorException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InternalErrorException" nillable="true" type="tns:InternalErrorException" />
   <xs:complexType name="ArrayOfDailySummarizedValues">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="DailySummarizedValues" nillable="true" type="tns:DailySummarizedValues" />
@@ -31,29 +58,23 @@
   </xs:complexType>
   <xs:element name="ArrayOfDailySummarizedValues" nillable="true" type="tns:ArrayOfDailySummarizedValues" />
   <xs:complexType name="DailySummarizedValues">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Averange" type="xs:float" />
-      <xs:element minOccurs="0" name="DayDate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Max" type="xs:float" />
-      <xs:element minOccurs="0" name="Min" type="xs:float" />
-      <xs:element minOccurs="0" name="Parameter" type="tns:ParameterType" />
-    </xs:sequence>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SummarizedValues">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DayDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
   <xs:element name="DailySummarizedValues" nillable="true" type="tns:DailySummarizedValues" />
-  <xs:complexType name="ArrayOfWeeklySummarizedValues">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="WeeklySummarizedValues" nillable="true" type="tns:WeeklySummarizedValues" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfWeeklySummarizedValues" nillable="true" type="tns:ArrayOfWeeklySummarizedValues" />
   <xs:complexType name="WeeklySummarizedValues">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Averange" type="xs:float" />
-      <xs:element minOccurs="0" name="Max" type="xs:float" />
-      <xs:element minOccurs="0" name="Min" type="xs:float" />
-      <xs:element minOccurs="0" name="Parameter" type="tns:ParameterType" />
-      <xs:element minOccurs="0" name="WeekNumber" type="xs:int" />
-    </xs:sequence>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SummarizedValues">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="WeekNumber" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
   <xs:element name="WeeklySummarizedValues" nillable="true" type="tns:WeeklySummarizedValues" />
   <xs:complexType name="ArrayOfAlarmData">

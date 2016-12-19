@@ -3,8 +3,8 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:4962/Service1.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://localhost:4962/Service1.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:4962/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service" />
+      <xsd:import schemaLocation="http://localhost:4962/Service1.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IServiceSmartH2O_getHourlySummarizedByDay_InputMessage">
@@ -13,17 +13,38 @@
   <wsdl:message name="IServiceSmartH2O_getHourlySummarizedByDay_OutputMessage">
     <wsdl:part name="parameters" element="tns:getHourlySummarizedByDayResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getHourlySummarizedByDay_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/SmartH2O_Service" name="detail" element="q1:Fault" />
+  </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getHourlySummarizedByDay_FoundNoResultsExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/SmartH2O_Service" name="detail" element="q2:FoundNoResultsException" />
+  </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getHourlySummarizedByDay_InternalErrorExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/SmartH2O_Service" name="detail" element="q3:InternalErrorException" />
+  </wsdl:message>
   <wsdl:message name="IServiceSmartH2O_getDailySummarizedByDataInterval_InputMessage">
     <wsdl:part name="parameters" element="tns:getDailySummarizedByDataInterval" />
   </wsdl:message>
   <wsdl:message name="IServiceSmartH2O_getDailySummarizedByDataInterval_OutputMessage">
     <wsdl:part name="parameters" element="tns:getDailySummarizedByDataIntervalResponse" />
   </wsdl:message>
-  <wsdl:message name="IServiceSmartH2O_getWeeklySummarizedByDataInterval_InputMessage">
-    <wsdl:part name="parameters" element="tns:getWeeklySummarizedByDataInterval" />
+  <wsdl:message name="IServiceSmartH2O_getDailySummarizedByDataInterval_FoundNoResultsExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/SmartH2O_Service" name="detail" element="q4:FoundNoResultsException" />
   </wsdl:message>
-  <wsdl:message name="IServiceSmartH2O_getWeeklySummarizedByDataInterval_OutputMessage">
-    <wsdl:part name="parameters" element="tns:getWeeklySummarizedByDataIntervalResponse" />
+  <wsdl:message name="IServiceSmartH2O_getDailySummarizedByDataInterval_InternalErrorExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/SmartH2O_Service" name="detail" element="q5:InternalErrorException" />
+  </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getWeeklySummarized_InputMessage">
+    <wsdl:part name="parameters" element="tns:getWeeklySummarized" />
+  </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getWeeklySummarized_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getWeeklySummarizedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getWeeklySummarized_FoundNoResultsExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/SmartH2O_Service" name="detail" element="q6:FoundNoResultsException" />
+  </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getWeeklySummarized_InternalErrorExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/SmartH2O_Service" name="detail" element="q7:InternalErrorException" />
   </wsdl:message>
   <wsdl:message name="IServiceSmartH2O_getDailyAlarmsInformation_InputMessage">
     <wsdl:part name="parameters" element="tns:getDailyAlarmsInformation" />
@@ -31,32 +52,55 @@
   <wsdl:message name="IServiceSmartH2O_getDailyAlarmsInformation_OutputMessage">
     <wsdl:part name="parameters" element="tns:getDailyAlarmsInformationResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getDailyAlarmsInformation_FoundNoResultsExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/SmartH2O_Service" name="detail" element="q8:FoundNoResultsException" />
+  </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getDailyAlarmsInformation_InternalErrorExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/SmartH2O_Service" name="detail" element="q9:InternalErrorException" />
+  </wsdl:message>
   <wsdl:message name="IServiceSmartH2O_getAlarmsInformationByDataInterval_InputMessage">
     <wsdl:part name="parameters" element="tns:getAlarmsInformationByDataInterval" />
   </wsdl:message>
   <wsdl:message name="IServiceSmartH2O_getAlarmsInformationByDataInterval_OutputMessage">
     <wsdl:part name="parameters" element="tns:getAlarmsInformationByDataIntervalResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getAlarmsInformationByDataInterval_FoundNoResultsExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/SmartH2O_Service" name="detail" element="q10:FoundNoResultsException" />
+  </wsdl:message>
+  <wsdl:message name="IServiceSmartH2O_getAlarmsInformationByDataInterval_InternalErrorExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/SmartH2O_Service" name="detail" element="q11:InternalErrorException" />
+  </wsdl:message>
   <wsdl:portType name="IServiceSmartH2O">
     <wsdl:operation name="getHourlySummarizedByDay">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceSmartH2O/getHourlySummarizedByDay" message="tns:IServiceSmartH2O_getHourlySummarizedByDay_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceSmartH2O/getHourlySummarizedByDayResponse" message="tns:IServiceSmartH2O_getHourlySummarizedByDay_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceSmartH2O/getHourlySummarizedByDayFaultFault" name="FaultFault" message="tns:IServiceSmartH2O_getHourlySummarizedByDay_FaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceSmartH2O/getHourlySummarizedByDayFoundNoResultsExceptionFault" name="FoundNoResultsExceptionFault" message="tns:IServiceSmartH2O_getHourlySummarizedByDay_FoundNoResultsExceptionFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceSmartH2O/getHourlySummarizedByDayInternalErrorExceptionFault" name="InternalErrorExceptionFault" message="tns:IServiceSmartH2O_getHourlySummarizedByDay_InternalErrorExceptionFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="getDailySummarizedByDataInterval">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataInterval" message="tns:IServiceSmartH2O_getDailySummarizedByDataInterval_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataIntervalResponse" message="tns:IServiceSmartH2O_getDailySummarizedByDataInterval_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataIntervalFoundNoResultsExceptionFault" name="FoundNoResultsExceptionFault" message="tns:IServiceSmartH2O_getDailySummarizedByDataInterval_FoundNoResultsExceptionFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataIntervalInternalErrorExceptionFault" name="InternalErrorExceptionFault" message="tns:IServiceSmartH2O_getDailySummarizedByDataInterval_InternalErrorExceptionFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="getWeeklySummarizedByDataInterval">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedByDataInterval" message="tns:IServiceSmartH2O_getWeeklySummarizedByDataInterval_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedByDataIntervalResponse" message="tns:IServiceSmartH2O_getWeeklySummarizedByDataInterval_OutputMessage" />
+    <wsdl:operation name="getWeeklySummarized">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceSmartH2O/getWeeklySummarized" message="tns:IServiceSmartH2O_getWeeklySummarized_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedResponse" message="tns:IServiceSmartH2O_getWeeklySummarized_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedFoundNoResultsExceptionFault" name="FoundNoResultsExceptionFault" message="tns:IServiceSmartH2O_getWeeklySummarized_FoundNoResultsExceptionFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedInternalErrorExceptionFault" name="InternalErrorExceptionFault" message="tns:IServiceSmartH2O_getWeeklySummarized_InternalErrorExceptionFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="getDailyAlarmsInformation">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformation" message="tns:IServiceSmartH2O_getDailyAlarmsInformation_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformationResponse" message="tns:IServiceSmartH2O_getDailyAlarmsInformation_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformationFoundNoResultsExceptionFault" name="FoundNoResultsExceptionFault" message="tns:IServiceSmartH2O_getDailyAlarmsInformation_FoundNoResultsExceptionFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformationInternalErrorExceptionFault" name="InternalErrorExceptionFault" message="tns:IServiceSmartH2O_getDailyAlarmsInformation_InternalErrorExceptionFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="getAlarmsInformationByDataInterval">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataInterval" message="tns:IServiceSmartH2O_getAlarmsInformationByDataInterval_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataIntervalResponse" message="tns:IServiceSmartH2O_getAlarmsInformationByDataInterval_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataIntervalFoundNoResultsExceptionFault" name="FoundNoResultsExceptionFault" message="tns:IServiceSmartH2O_getAlarmsInformationByDataInterval_FoundNoResultsExceptionFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataIntervalInternalErrorExceptionFault" name="InternalErrorExceptionFault" message="tns:IServiceSmartH2O_getAlarmsInformationByDataInterval_InternalErrorExceptionFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IServiceSmartH2O" type="tns:IServiceSmartH2O">
@@ -69,6 +113,15 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FoundNoResultsExceptionFault">
+        <soap:fault use="literal" name="FoundNoResultsExceptionFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="InternalErrorExceptionFault">
+        <soap:fault use="literal" name="InternalErrorExceptionFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getDailySummarizedByDataInterval">
       <soap:operation soapAction="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataInterval" style="document" />
@@ -78,15 +131,27 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FoundNoResultsExceptionFault">
+        <soap:fault use="literal" name="FoundNoResultsExceptionFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="InternalErrorExceptionFault">
+        <soap:fault use="literal" name="InternalErrorExceptionFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="getWeeklySummarizedByDataInterval">
-      <soap:operation soapAction="http://tempuri.org/IServiceSmartH2O/getWeeklySummarizedByDataInterval" style="document" />
+    <wsdl:operation name="getWeeklySummarized">
+      <soap:operation soapAction="http://tempuri.org/IServiceSmartH2O/getWeeklySummarized" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FoundNoResultsExceptionFault">
+        <soap:fault use="literal" name="FoundNoResultsExceptionFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="InternalErrorExceptionFault">
+        <soap:fault use="literal" name="InternalErrorExceptionFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getDailyAlarmsInformation">
       <soap:operation soapAction="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformation" style="document" />
@@ -96,6 +161,12 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FoundNoResultsExceptionFault">
+        <soap:fault use="literal" name="FoundNoResultsExceptionFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="InternalErrorExceptionFault">
+        <soap:fault use="literal" name="InternalErrorExceptionFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getAlarmsInformationByDataInterval">
       <soap:operation soapAction="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataInterval" style="document" />
@@ -105,6 +176,12 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FoundNoResultsExceptionFault">
+        <soap:fault use="literal" name="FoundNoResultsExceptionFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="InternalErrorExceptionFault">
+        <soap:fault use="literal" name="InternalErrorExceptionFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="ServiceImplementationSmartH2O">

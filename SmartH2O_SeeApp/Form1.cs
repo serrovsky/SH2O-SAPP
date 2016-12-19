@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -29,7 +30,22 @@ namespace SmartH2O_SeeApp
         {
             smartH2OClient = new ServiceSmartH2OClient(); //TODO: acho que esta incompleto..neve precisar de mais alguma coisa quando o servico nao for local..
 
-            // HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
+
+
+            /*
+            try
+            {
+                HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
+            }
+            catch (FaultException<Fault> f)
+            {
+                MessageBox.Show("rebentou na excepcao");
+                return;
+            }
+            */
+
+
+            //HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
 
             //TODO: validar se a lista esta vazia..
             //Console.WriteLine("Testing service!!!!!!!!!!!!JP!!!!!!!! __>>>>>" + list[0].Averange + "<<<<<<");
@@ -93,8 +109,10 @@ namespace SmartH2O_SeeApp
 
             if (parametersCheckedListBox.GetItemChecked(0))
             {
+
                 //chamar o metodo do servico com (selectedDate, PH
                 list.AddRange(smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, selectedDate));
+
             }
             if (parametersCheckedListBox.GetItemChecked(1))
             {
@@ -118,7 +136,7 @@ namespace SmartH2O_SeeApp
 
             foreach (HourlySummarizedValues values in list)
             {
-                listBoxParametersValues.Items.Add("Parameter Type: " + values.Parameter.ToString() + " | Hour: " + values.Hour + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
+                listBoxParametersValues.Items.Add("Parameter: " + values.Parameter.ToString() + " | Hour: " + values.Hour + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
             }
 
         }
@@ -178,14 +196,13 @@ namespace SmartH2O_SeeApp
                 list.AddRange(smartH2OClient.getAlarmsInformationByDataInterval(startDate, endDate));
             }
 
-
             Debug.WriteLine("/t/t/t/t ListCount: " + list.Count);
             //TODO: Se tiver tempo
             //Completar data com horas e minutos e mostrar.. Fica com melhor aspecto
             foreach (AlarmData alarmData in list)
             {
                 //Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
-                listBoxAlarms.Items.Add("Parameter Type: " + alarmData.ParameterType.ToString() + " | Value: " + alarmData.Parametervalue + " | Date: " + alarmData.Date.ToString("dd/MM/yyyy") + " | Alarm Description: " + alarmData.AlarmDescription);
+                listBoxAlarms.Items.Add("Parameter: " + alarmData.ParameterType.ToString() + " | Value: " + alarmData.Parametervalue + " | Date: " + alarmData.Date.ToString("dd/MM/yyyy") + " | Description: " + alarmData.AlarmDescription);
             }
 
         }
@@ -215,37 +232,64 @@ namespace SmartH2O_SeeApp
                 return;
             }
 
-            List<DailySummarizedValues> list = new List<DailySummarizedValues>();
-
-
             //TODO: testar melhor com melhores datas
-            if (parametersCheckedListBox.GetItemChecked(0))
+            List<ParameterType> parameters = new List<ParameterType>();
+            if (parametersCheckedListBox.GetItemChecked(0)) //PH
             {
-                list.AddRange(smartH2OClient.getDailySummarizedByDataInterval(ParameterType.PH, startDate, endDate));
-                //chamar o metodo do servico com (startDate, endDate, PH)
+                parameters.Add(ParameterType.PH);
             }
-            if (parametersCheckedListBox.GetItemChecked(1))
+            if (parametersCheckedListBox.GetItemChecked(1)) //NH3
             {
-                //chamar o metodo do servico com (startDate, endDate, NH3)
-                list.AddRange(smartH2OClient.getDailySummarizedByDataInterval(ParameterType.NH3, startDate, endDate));
+                parameters.Add(ParameterType.NH3);
             }
-            if (parametersCheckedListBox.GetItemChecked(2))
+            if (parametersCheckedListBox.GetItemChecked(2)) //CI2
             {
-                //chamar o metodo do servico com (startDate, endDate, CI2)
-                list.AddRange(smartH2OClient.getDailySummarizedByDataInterval(ParameterType.CI2, startDate, endDate));
+                parameters.Add(ParameterType.CI2);
+
             }
+
+            List<DailySummarizedValues> list = new List<DailySummarizedValues>();
+            DailySummarizedValues[] array;
+            foreach (ParameterType type in parameters)
+            {
+                try
+                {
+                    list.AddRange(smartH2OClient.getDailySummarizedByDataInterval(type, startDate, endDate));
+                }
+                catch (FaultException<FoundNoResultsException> ex)
+                {/* não adiciona nada à lista*/}
+                catch (FaultException<InternalErrorException> ex)
+                {
+                    // erro interno no servico, nao interessa dar detalhes
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+            }
+
+            if (list.Count == 0)
+            {
+                MessageBox.Show("No Results were found from " + startDate.ToString("dd/MM/yyyy") + "to " + endDate.ToString("dd/MM/yyyy"));
+                return;
+            }
+
+
+
+
+
 
             //TODO: ENVIAR FAULTS SE NAO EXISTIREM RESULTADOS
             foreach (DailySummarizedValues values in list)
             {
                 //Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
-                listBoxParametersValues.Items.Add("Parameter Type: " + values.Parameter.ToString() + " | Date: " + values.DayDate.ToString("dd/MM/yyyy") + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
+                listBoxParametersValues.Items.Add("Parameter: " + values.Parameter.ToString() + " | Date: " + values.DayDate.ToString("dd/MM/yyyy") + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
             }
 
         }
 
         private void submitWeeklyParameterButton_Click(object sender, EventArgs e)
         {
+
+            //TODO: alterar restantes metodos com base neste
             listBoxParametersValues.Items.Clear();
 
             if (checkIfAreNoItemsSelected())
@@ -259,30 +303,49 @@ namespace SmartH2O_SeeApp
                 return;
             }
 
-            int year = weeklyDateTimePicker.Value.Year;
-            int selectedWeek = weekComboBox.SelectedIndex + 1;
+            List<ParameterType> parameters = new List<ParameterType>();
+            if (parametersCheckedListBox.GetItemChecked(0)) // PH selected
+            {
+                parameters.Add(ParameterType.PH);
+            }
+            if (parametersCheckedListBox.GetItemChecked(1)) //NH3 selected
+            {
+                parameters.Add(ParameterType.NH3);
+            }
+            if (parametersCheckedListBox.GetItemChecked(2)) // CI2 Selected
+            {
+                parameters.Add(ParameterType.CI2);
+            }
 
+            int selectedYear = weeklyDateTimePicker.Value.Year;
+            int selectedWeek = weekComboBox.SelectedIndex + 1;
             List<WeeklySummarizedValues> list = new List<WeeklySummarizedValues>();
 
-            if (parametersCheckedListBox.GetItemChecked(0))
+            foreach (ParameterType type in parameters)
             {
-                //chamar o metodo do servico com (selectedWeek, year, PH)
-                list.AddRange(smartH2OClient.getWeeklySummarizedByDataInterval(ParameterType.PH, selectedWeek, year));
+                try
+                {
+                    list.Add(smartH2OClient.getWeeklySummarized(type, selectedWeek, selectedYear));
+                }
+                catch (FaultException<FoundNoResultsException> ex)
+                { /*não adiciona nada à lista*/}
+                catch (FaultException<InternalErrorException> ex)
+                {
+                    // erro interno no servico, nao interessa dar detalhes
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
             }
-            if (parametersCheckedListBox.GetItemChecked(1))
+
+            if (list.Count == 0)
             {
-                //chamar o metodo do servico com (selectedWeek, year, NH3)
-                list.AddRange(smartH2OClient.getWeeklySummarizedByDataInterval(ParameterType.NH3, selectedWeek, year));
-            }
-            if (parametersCheckedListBox.GetItemChecked(2))
-            {
-                //chamar o metodo do servico com (selectedWeek, year, CI2)
-                list.AddRange(smartH2OClient.getWeeklySummarizedByDataInterval(ParameterType.CI2, selectedWeek, year));
+                MessageBox.Show("No Results were found: Week: " + selectedWeek + ", Year: " + selectedYear);
+                return;
             }
 
             foreach (WeeklySummarizedValues values in list)
             {
-                listBoxParametersValues.Items.Add("Parameter Type: " + values.Parameter.ToString() + " | Week: " + values.WeekNumber + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
+                listBoxParametersValues.Items.Add("Parameter: " + values.Parameter.ToString() + " | Week: " + values.WeekNumber + " | Minimum value: " + values.Min + " | Maximum value: " + values.Max + " | Averange value: " + values.Averange);
             }
         }
 
@@ -304,7 +367,6 @@ namespace SmartH2O_SeeApp
         {
             return (startDate.Date > endDate.Date ? true : false);
         }
-
 
         private void weeklyDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
@@ -426,6 +488,11 @@ namespace SmartH2O_SeeApp
             chart1.Series[1].Points.AddXY("50h", 80);
             chart1.Series[2].Points.AddXY("50h", 60);
             */
+
+            //TODO: grafico semanal
+            //tem de mostrar todos os dias de uma semana
+            //calcular o dia inicial e final da semana e chamar getDailySummarizedByDataInterval
+
         }
     }
 }
