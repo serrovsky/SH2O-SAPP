@@ -52,8 +52,6 @@ namespace SmartH2O_SeeApp
 
             //AlarmData[] list2 = smartH2OClient.getDailyAlarmsInformation();
 
-            Console.WriteLine("STEP 3");
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -106,32 +104,40 @@ namespace SmartH2O_SeeApp
                 return;
             }
 
+            List<ParameterType> parameters = new List<ParameterType>();
+            if (parametersCheckedListBox.GetItemChecked(0)) //PH
+            {
+                parameters.Add(ParameterType.PH);
+            }
+            if (parametersCheckedListBox.GetItemChecked(1)) //NH3
+            {
+                parameters.Add(ParameterType.NH3);
+            }
+            if (parametersCheckedListBox.GetItemChecked(2)) //CI2
+            {
+                parameters.Add(ParameterType.CI2);
+            }
+
             List<HourlySummarizedValues> list = new List<HourlySummarizedValues>();
-
-            if (parametersCheckedListBox.GetItemChecked(0))
+            foreach (ParameterType type in parameters)
             {
-
-                //chamar o metodo do servico com (selectedDate, PH
-                list.AddRange(smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, selectedDate));
-
+                try
+                {
+                    list.AddRange(smartH2OClient.getHourlySummarizedByDay(type, selectedDate));
+                }
+                catch (FaultException<FoundNoResultsException> ex)
+                {/* não adiciona nada à lista*/}
+                catch (FaultException<InternalErrorException> ex)
+                {
+                    // erro interno no servico, nao interessa dar detalhes
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
             }
-            if (parametersCheckedListBox.GetItemChecked(1))
-            {
-                //chamar o metodo do servico com (selectedDate, NH3)
-                list.AddRange(smartH2OClient.getHourlySummarizedByDay(ParameterType.NH3, selectedDate));
-            }
-            if (parametersCheckedListBox.GetItemChecked(2))
-            {
-                //chamar o metodo do servico com (selectedDate, CI2)
-                list.AddRange(smartH2OClient.getHourlySummarizedByDay(ParameterType.CI2, selectedDate));
-            }
-
-            //TODO: validar se lista vazia
-            //Se a data nao der resultado, nao chega lista para ser apanhado por este if.. confimar..
 
             if (list.Count == 0)
             {
-                listBoxParametersValues.Items.Add("Não existem resultados");
+                MessageBox.Show("No Results were found from " + selectedDate.ToString("dd/MM/yyyy"));
                 return;
             }
 
@@ -144,6 +150,8 @@ namespace SmartH2O_SeeApp
 
         private void submitAlarmsButton_Click(object sender, EventArgs e)
         {
+            //TODO: se tiver tempo
+            //limpar este metodo, dividir por funcoes privadas..
 
             listBoxAlarms.Items.Clear();
 
@@ -153,25 +161,31 @@ namespace SmartH2O_SeeApp
             }
 
             List<AlarmData> list = new List<AlarmData>();
+            string feedback = "";
 
             if (optionsAlarmsComboBox.SelectedIndex == 0) // selecionou dia especifico
             {
                 DateTime startDate = fromAlarmsDateTimePicker.Value;
-                DateTime todayDate = DateTime.Now;
-                if (checkDates(startDate, todayDate))
+                if (checkDates(startDate, DateTime.Now))
                 {
                     MessageBox.Show("PLEASE CHECK THE DATES (SELECTEDDATE <= TODAY)");
                     return;
                 }
-                //chamar o metodo do servico com (PH)
-                //chamar o metodo do servico com (NH3)
-                //chamar o metodo do servico com (CI2)
 
-                //TODO: prof
-                //{"The maximum message size quota for incoming messages (65536) has been exceeded. To increase the quota, use the MaxReceivedMessageSize property on the appropriate binding element."}
-                // esta linha da este erro caso o ficheiro seja muito grande.. como Resolver??
-                list.AddRange(smartH2OClient.getDailyAlarmsInformation(startDate));
+                try
+                {
+                    list.AddRange(smartH2OClient.getDailyAlarmsInformation(startDate));
+                }
+                catch (FaultException<FoundNoResultsException> ex)
+                {/* não adiciona nada à lista*/}
+                catch (FaultException<InternalErrorException> ex)
+                {
+                    // erro interno no servico, nao interessa dar detalhes
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
 
+                feedback = "No Results were found from " + startDate.ToString("dd/MM/yyyy");
             }
             else if (optionsAlarmsComboBox.SelectedIndex == 1) // selecionou intervalo de dias
             {
@@ -191,21 +205,32 @@ namespace SmartH2O_SeeApp
                     return;
                 }
 
-                //chamar o metodo do servico com (startDate, endDate, PH)
-                //chamar o metodo do servico com (startDate, endDate, NH3)
-                //chamar o metodo do servico com (startDate, endDate, CI2)
-                list.AddRange(smartH2OClient.getAlarmsInformationByDataInterval(startDate, endDate));
+                try
+                {
+                    list.AddRange(smartH2OClient.getAlarmsInformationByDataInterval(startDate, endDate));
+                }
+                catch (FaultException<FoundNoResultsException> ex)
+                {/* não adiciona nada à lista*/}
+                catch (FaultException<InternalErrorException> ex)
+                {
+                    // erro interno no servico, nao interessa dar detalhes
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                feedback = "No Results were found from " + startDate.ToString("dd/MM/yyyy") + "to " + endDate.ToString("dd/MM/yyyy");
             }
 
-            Debug.WriteLine("/t/t/t/t ListCount: " + list.Count);
-            //TODO: Se tiver tempo
-            //Completar data com horas e minutos e mostrar.. Fica com melhor aspecto
+
+            if (list.Count == 0)
+            {
+                MessageBox.Show(feedback);
+                return;
+            }
+
             foreach (AlarmData alarmData in list)
             {
-                //Debug.WriteLine("\t !!!!!!!!!!!!!!! hora: {0}, min: {1}, max: {2}, avg: {3}", values.Hour, values.Min, values.Max, values.Averange);
-                listBoxAlarms.Items.Add("Parameter: " + alarmData.ParameterType.ToString() + " | Value: " + alarmData.Parametervalue + " | Date: " + alarmData.Date.ToString("dd/MM/yyyy") + " | Description: " + alarmData.AlarmDescription);
+                listBoxAlarms.Items.Add("Parameter: " + alarmData.ParameterType.ToString() + " | Value: " + alarmData.Parametervalue + " | Date: " + alarmData.Date.ToString("dd/MM/yyyy HH:mm:ss") + " | Description: " + alarmData.AlarmDescription);
             }
-
         }
 
         private void submitDailyParameterButton_Click(object sender, EventArgs e)
@@ -246,11 +271,9 @@ namespace SmartH2O_SeeApp
             if (parametersCheckedListBox.GetItemChecked(2)) //CI2
             {
                 parameters.Add(ParameterType.CI2);
-
             }
 
             List<DailySummarizedValues> list = new List<DailySummarizedValues>();
-            DailySummarizedValues[] array;
             foreach (ParameterType type in parameters)
             {
                 try
@@ -272,11 +295,6 @@ namespace SmartH2O_SeeApp
                 MessageBox.Show("No Results were found from " + startDate.ToString("dd/MM/yyyy") + "to " + endDate.ToString("dd/MM/yyyy"));
                 return;
             }
-
-
-
-
-
 
             //TODO: ENVIAR FAULTS SE NAO EXISTIREM RESULTADOS
             foreach (DailySummarizedValues values in list)
