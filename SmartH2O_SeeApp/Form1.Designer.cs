@@ -437,7 +437,6 @@
             // 
             // fromAlarmsDateTimePicker
             // 
-            this.fromAlarmsDateTimePicker.Enabled = false;
             this.fromAlarmsDateTimePicker.Location = new System.Drawing.Point(260, 23);
             this.fromAlarmsDateTimePicker.Name = "fromAlarmsDateTimePicker";
             this.fromAlarmsDateTimePicker.Size = new System.Drawing.Size(200, 20);

@@ -73,16 +73,12 @@ namespace SmartH2O_SeeApp
 
         private void optionsAlarmsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            // TODO: No parameters alarm, haver uma opção de predefinida..
             if (optionsAlarmsComboBox.SelectedIndex == 1)
             {
-                fromAlarmsDateTimePicker.Enabled = true;
                 toAlarmsDateTimePicker.Enabled = true;
             }
             if (optionsAlarmsComboBox.SelectedIndex == 0)
             {
-                fromAlarmsDateTimePicker.Enabled = true;
                 toAlarmsDateTimePicker.Enabled = false;
             }
         }
