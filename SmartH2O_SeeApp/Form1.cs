@@ -19,6 +19,7 @@ namespace SmartH2O_SeeApp
     {
 
         ServiceSmartH2OClient smartH2OClient;
+        List<Week> listOfWeekDays = new List<Week>();
 
         public Form1()
         {
@@ -455,6 +456,7 @@ namespace SmartH2O_SeeApp
             foreach (var week in weeks)
             {
                 weeksList.Add("Semana nº " + week.weekNum + " de " + week.weekStart.ToShortDateString() + " a " + week.weekFinish.ToShortDateString());
+                listOfWeekDays.Add(new Week((int)week.weekNum, (DateTime)week.weekStart, (DateTime)week.weekFinish));
             }
 
             return weeksList;
@@ -510,4 +512,22 @@ namespace SmartH2O_SeeApp
 
         }
     }
+
+    internal class Week
+    {
+        public int WeekNum { get; }
+        public DateTime FirstDay { get; }
+        public DateTime LastDay { get; }
+
+        public Week(int weeknumber, DateTime first, DateTime last)
+        {
+            WeekNum = weeknumber;
+            FirstDay = first;
+            LastDay = last;
+        }
+    }
+
+
 }
+
+
