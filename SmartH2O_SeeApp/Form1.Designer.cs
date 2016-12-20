@@ -86,7 +86,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.dateTimePickerDateGraph = new System.Windows.Forms.DateTimePicker();
             this.periodGraphicallComboBox = new System.Windows.Forms.ComboBox();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -95,7 +95,7 @@
             this.tabPage5.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -453,7 +453,7 @@
             this.tabPage6.Controls.Add(this.label11);
             this.tabPage6.Controls.Add(this.dateTimePickerDateGraph);
             this.tabPage6.Controls.Add(this.periodGraphicallComboBox);
-            this.tabPage6.Controls.Add(this.chart1);
+            this.tabPage6.Controls.Add(this.chart);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Size = new System.Drawing.Size(594, 543);
@@ -546,60 +546,57 @@
             this.periodGraphicallComboBox.TabIndex = 1;
             this.periodGraphicallComboBox.SelectedIndexChanged += new System.EventHandler(this.periodGraphicallComboBox_SelectedIndexChanged);
             // 
-            // chart1
+            // chart
             // 
             chartArea1.Name = "AreaPH";
             chartArea2.Name = "AreaNH3";
             chartArea3.Name = "AreaCI2";
-            this.chart1.ChartAreas.Add(chartArea1);
-            this.chart1.ChartAreas.Add(chartArea2);
-            this.chart1.ChartAreas.Add(chartArea3);
+            this.chart.ChartAreas.Add(chartArea1);
+            this.chart.ChartAreas.Add(chartArea2);
+            this.chart.ChartAreas.Add(chartArea3);
             legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(0, 162);
-            this.chart1.Name = "chart1";
+            this.chart.Legends.Add(legend1);
+            this.chart.Location = new System.Drawing.Point(0, 162);
+            this.chart.Name = "chart";
             series1.ChartArea = "AreaPH";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
             series1.Legend = "Legend1";
-            series1.Name = "PH Min";
+            series1.Name = "PH Max";
             series2.ChartArea = "AreaPH";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
             series2.Legend = "Legend1";
             series2.Name = "PH Avg";
             series3.ChartArea = "AreaPH";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
             series3.Legend = "Legend1";
-            series3.Name = "PH max";
+            series3.Name = "PH Min";
             series4.ChartArea = "AreaNH3";
             series4.Legend = "Legend1";
-            series4.Name = "Series4";
+            series4.Name = "NH3 Max";
             series5.ChartArea = "AreaNH3";
             series5.Legend = "Legend1";
-            series5.Name = "Series5";
+            series5.Name = "NH3 Avg";
             series6.ChartArea = "AreaNH3";
             series6.Legend = "Legend1";
-            series6.Name = "Series6";
+            series6.Name = "NH3 Min";
             series7.ChartArea = "AreaCI2";
             series7.Legend = "Legend1";
-            series7.Name = "Series7";
+            series7.Name = "CI2 Max";
             series8.ChartArea = "AreaCI2";
             series8.Legend = "Legend1";
-            series8.Name = "Series8";
+            series8.Name = "CI2 Avg";
             series9.ChartArea = "AreaCI2";
             series9.Legend = "Legend1";
-            series9.Name = "Series9";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
-            this.chart1.Series.Add(series3);
-            this.chart1.Series.Add(series4);
-            this.chart1.Series.Add(series5);
-            this.chart1.Series.Add(series6);
-            this.chart1.Series.Add(series7);
-            this.chart1.Series.Add(series8);
-            this.chart1.Series.Add(series9);
-            this.chart1.Size = new System.Drawing.Size(594, 385);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "0";
+            series9.Name = "CI2 Min";
+            this.chart.Series.Add(series1);
+            this.chart.Series.Add(series2);
+            this.chart.Series.Add(series3);
+            this.chart.Series.Add(series4);
+            this.chart.Series.Add(series5);
+            this.chart.Series.Add(series6);
+            this.chart.Series.Add(series7);
+            this.chart.Series.Add(series8);
+            this.chart.Series.Add(series9);
+            this.chart.Size = new System.Drawing.Size(594, 385);
+            this.chart.TabIndex = 0;
+            this.chart.Text = "0";
             // 
             // Form1
             // 
@@ -626,7 +623,7 @@
             this.tabPage2.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -666,7 +663,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart;
         private System.Windows.Forms.DateTimePicker dateTimePickerDateGraph;
         private System.Windows.Forms.ComboBox periodGraphicallComboBox;
         private System.Windows.Forms.Label label12;

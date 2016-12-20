@@ -51,6 +51,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="InternalErrorException" nillable="true" type="tns:InternalErrorException" />
+  <xs:complexType name="FunctionParameterException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FunctionParameterException" nillable="true" type="tns:FunctionParameterException" />
   <xs:complexType name="ArrayOfDailySummarizedValues">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="DailySummarizedValues" nillable="true" type="tns:DailySummarizedValues" />

@@ -19,40 +19,13 @@ namespace SmartH2O_SeeApp
     {
 
         ServiceSmartH2OClient smartH2OClient;
-        List<Week> listOfWeekDays = new List<Week>();
+        //List<Week> listOfWeekDays = new List<Week>();
+        WeekList weeksDatesManager = new WeekList();
 
         public Form1()
         {
+            smartH2OClient = new ServiceSmartH2OClient();
             InitializeComponent();
-            initializeService();
-        }
-
-        private void initializeService()
-        {
-            smartH2OClient = new ServiceSmartH2OClient(); //TODO: acho que esta incompleto..neve precisar de mais alguma coisa quando o servico nao for local..
-
-
-
-            /*
-            try
-            {
-                HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
-            }
-            catch (FaultException<Fault> f)
-            {
-                MessageBox.Show("rebentou na excepcao");
-                return;
-            }
-            */
-
-
-            //HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.PH, DateTime.Today);
-
-            //TODO: validar se a lista esta vazia..
-            //Console.WriteLine("Testing service!!!!!!!!!!!!JP!!!!!!!! __>>>>>" + list[0].Averange + "<<<<<<");
-
-            //AlarmData[] list2 = smartH2OClient.getDailyAlarmsInformation();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -95,11 +68,12 @@ namespace SmartH2O_SeeApp
             DateTime todayDate = DateTime.Now;
             DateTime selectedDate = parameterHourlyDateTimePicker.Value;
 
+            /*
             if (checkDates(selectedDate, todayDate))
             {
                 MessageBox.Show("PLEASE CHECK THE DATES (SELECTEDDATE <= TODAY)");
                 return;
-            }
+            }*/
 
             List<ParameterType> parameters = new List<ParameterType>();
             if (parametersCheckedListBox.GetItemChecked(0)) //PH
@@ -452,7 +426,8 @@ namespace SmartH2O_SeeApp
             foreach (var week in weeks)
             {
                 weeksList.Add("Semana nº " + week.weekNum + " de " + week.weekStart.ToShortDateString() + " a " + week.weekFinish.ToShortDateString());
-                listOfWeekDays.Add(new Week((int)week.weekNum, (DateTime)week.weekStart, (DateTime)week.weekFinish));
+                //guarda datas de cada semana
+                weeksDatesManager.add(new Week((int)week.weekNum, (DateTime)week.weekStart, (DateTime)week.weekFinish));
             }
 
             return weeksList;
@@ -460,70 +435,188 @@ namespace SmartH2O_SeeApp
 
         private void submitGraphicallInformationButton_Click(object sender, EventArgs e)
         {
-            if (weekGraphComboBox.SelectedIndex < 0)
-            {
-                MessageBox.Show("Must select a week");
-                return;
-            }
-
-            int selectedYear = dateTimePickerYearGraph.Value.Year;
-            int selectedWeek = weekGraphComboBox.SelectedIndex + 1;
-
             // limpa grafico
-            foreach (var series in chart1.Series)
+            foreach (var series in chart.Series)
             {
                 series.Points.Clear();
             }
 
-            //TODO: validar quais a opçoes escolhidas..
-
-            DateTime date = dateTimePickerDateGraph.Value;
-
-            //TODO: alterar para daily
-            HourlySummarizedValues[] list = smartH2OClient.getHourlySummarizedByDay(ParameterType.CI2, date);
-
-            for (int i = 0; i < list.Length; i++)
+            try
             {
-                //string name = i.ToString("D" + 2) + "h";
-                string name = list[i].Hour.ToString() + "h";
-                chart1.Series[2].Points.AddXY(name, list[i].Min);
-                chart1.Series[0].Points.AddXY(name, list[i].Max);
-                chart1.Series[1].Points.AddXY(name, list[i].Averange);
+                if (periodGraphicallComboBox.SelectedIndex == 0) //pesquisa por dia
+                {
+                    displayChartsByDay();
+                }
+                else if (periodGraphicallComboBox.SelectedIndex == 1) //pesquisa por semana
+                {
 
-                Console.WriteLine("Result parametro: " + list[i].Parameter.ToString());
-                Console.WriteLine("OUTPUT SMATH20_SEEAPP " + list[i].Averange);
-                Console.WriteLine("OUTPUT SMATH20_SEEAPP " + list[i].Min);
-                Console.WriteLine("OUTPUT SMATH20_SEEAPP " + list[i].Max);
+                    displayChartsByWeek();
+                }
+            }
+            catch (FaultException<InternalErrorException> ex)
+            {
+                // erro interno no servico, nao interessa dar detalhes
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            catch (FaultException<FunctionParameterException> ex)
+            {
+                //TODO: nao esta a funcionar
+                MessageBox.Show("" + ex.Message);
+                return;
+            }
+            catch (Exception ex)
+            {
+                //catch para o caso de correr alguma coisa mal com o parse em displayChartsByWeek()
+                MessageBox.Show("Este erro aconteceu porque quem desenvolveu isto é uma besta! - " + ex.Message);
+                return;
+            }
+        }
+
+        private void displayChartsByWeek()
+        {
+            // quem chama esta funcao está dentro de um try catch para apanhar
+            //algum problema que acontece com o PARSE..////////////////////////////////
+            int selectedWeek = weekGraphComboBox.SelectedIndex + 1;//
+
+            ///////////////////////////////////////////////////////////////////////////                                                                                     
+
+            DateTime firstDayDate = weeksDatesManager.getFirstDayOf(selectedWeek);
+            DateTime lastDayDate = weeksDatesManager.geLastDayOf(selectedWeek);
+
+            bool nothingAdded = true;
+            foreach (ParameterType type in Enum.GetValues(typeof(ParameterType)))
+            {
+                try
+                {
+                    addDailyValuesByDateInterval(smartH2OClient.getDailySummarizedByDataInterval(type, firstDayDate, lastDayDate));
+                    nothingAdded = false;
+                }
+                catch (FaultException<FoundNoResultsException> ex) // esta tem de ser apanhada no local
+                {/* não adiciona nada à lista*/
+                    //MessageBox.Show("apanhou22222222222222");
+                }
             }
 
-            /*
-            chart1.Series[0].Points.AddXY("50h", 50);
-            chart1.Series[1].Points.AddXY("50h", 80);
-            chart1.Series[2].Points.AddXY("50h", 60);
-            */
-
-            //TODO: grafico semanal
-            //tem de mostrar todos os dias de uma semana
-            //calcular o dia inicial e final da semana e chamar getDailySummarizedByDataInterval
+            if (nothingAdded)
+            {
+                MessageBox.Show("No Results were found from " + firstDayDate.ToString("dd/MM/yyyy") + " to " + lastDayDate.ToString("dd/MM/yyyy"));
+            }
 
         }
-    }
 
-    internal class Week
-    {
-        public int WeekNum { get; }
-        public DateTime FirstDay { get; }
-        public DateTime LastDay { get; }
-
-        public Week(int weeknumber, DateTime first, DateTime last)
+        private void addDailyValuesByDateInterval(DailySummarizedValues[] arr)
         {
-            WeekNum = weeknumber;
-            FirstDay = first;
-            LastDay = last;
+            //TODO: tirar isto daqui
+            chart.ChartAreas[0].AxisX.LabelStyle.Interval = 1;
+            chart.ChartAreas[1].AxisX.LabelStyle.Interval = 1;
+            chart.ChartAreas[2].AxisX.LabelStyle.Interval = 1;
+
+            //MessageBox.Show(arr.Length.ToString());
+
+            //TODO: se houver apenas um resultado mudar para grafico de barras
+            for (int i = 0; i < arr.Length; i++)
+            {
+                //string idn = arr[i].DayDate.ToString("ddd");
+
+                string idn = arr[i].DayDate.ToString("dd/MM");
+
+                string typeS = arr[i].Parameter.ToString();
+
+                chart.Series[typeS + " Min"].Points.AddXY(idn, arr[i].Min);
+                chart.Series[typeS + " Avg"].Points.AddXY(idn, arr[i].Averange);
+                chart.Series[typeS + " Max"].Points.AddXY(idn, arr[i].Max);
+            }
+        }
+
+        private void displayChartsByDay()
+        {
+            DateTime selectedDate = dateTimePickerDateGraph.Value;
+
+            bool nothingAdded = true;
+            foreach (ParameterType type in Enum.GetValues(typeof(ParameterType)))
+            {
+                try
+                {
+                    addHoursValuesToChartByDay(smartH2OClient.getHourlySummarizedByDay(type, selectedDate));
+                    nothingAdded = false;
+                }
+                catch (FaultException<FoundNoResultsException> ex) // esta tem de ser apanhada no local
+                {/* não adiciona nada à lista*/
+                 //MessageBox.Show("apanhou22222222222222");
+                }
+            }
+
+            if (nothingAdded)
+            {
+                MessageBox.Show("No Results were found from " + selectedDate.ToString("dd/MM/yyyy"));
+            }
+        }
+
+        private void addHoursValuesToChartByDay(HourlySummarizedValues[] arr)
+        {
+            //TODO: tirar isto daqui
+            //chart.ChartAreas[0].AxisX.LabelStyle.Interval = 1;
+            //chart.ChartAreas[1].AxisX.LabelStyle.Interval = 1;
+            //chart.ChartAreas[2].AxisX.LabelStyle.Interval = 1;
+
+            //MessageBox.Show(arr.Length.ToString());
+
+            //TODO: se houver apenas um resultado mudar para grafico de barras
+            for (int i = 0; i < arr.Length; i++)
+            {
+                string idn = arr[i].Hour.ToString() + "h";
+                string typeS = arr[i].Parameter.ToString();
+
+                chart.Series[typeS + " Min"].Points.AddXY(idn, arr[i].Min);
+                chart.Series[typeS + " Avg"].Points.AddXY(idn, arr[i].Averange);
+                chart.Series[typeS + " Max"].Points.AddXY(idn, arr[i].Max);
+            }
+        }
+
+        internal class Week
+        {
+            public int WeekNum { get; }
+            public DateTime FirstDay { get; }
+            public DateTime LastDay { get; }
+
+            public Week(int weeknumber, DateTime first, DateTime last)
+            {
+                WeekNum = weeknumber;
+                FirstDay = first;
+                LastDay = last;
+            }
+        }
+        internal class WeekList
+        { // esta class é preenchida cada vez que uma lista de semanas é preenchida.
+            private Week[] weeks;
+
+            public WeekList()
+            {
+                weeks = new Week[53];
+            }
+
+            public void add(int weekNum, DateTime first, DateTime last)
+            {
+                add(new Week(weekNum, first, last));
+            }
+
+            public void add(Week week)
+            {
+                weeks[week.WeekNum - 1] = week;
+            }
+
+            public DateTime getFirstDayOf(int weekNumber)
+            {
+                return weeks[weekNumber - 1].FirstDay;
+            }
+
+            public DateTime geLastDayOf(int weekNumber)
+            {
+                return weeks[weekNumber - 1].LastDay;
+            }
         }
     }
-
-
 }
 
 

@@ -329,6 +329,51 @@ namespace SmartH2O_SeeApp.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FunctionParameterException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
+    [System.SerializableAttribute()]
+    public partial class FunctionParameterException : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MessageField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Message {
+            get {
+                return this.MessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+                    this.MessageField = value;
+                    this.RaisePropertyChanged("Message");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AlarmData", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
     [System.SerializableAttribute()]
     public partial class AlarmData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -430,6 +475,8 @@ namespace SmartH2O_SeeApp.ServiceReference1 {
             "onFault", Name="FoundNoResultsException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
         [System.ServiceModel.FaultContractAttribute(typeof(SmartH2O_SeeApp.ServiceReference1.InternalErrorException), Action="http://tempuri.org/IServiceSmartH2O/getHourlySummarizedByDayInternalErrorExceptio" +
             "nFault", Name="InternalErrorException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
+        [System.ServiceModel.FaultContractAttribute(typeof(SmartH2O_SeeApp.ServiceReference1.FunctionParameterException), Action="http://tempuri.org/IServiceSmartH2O/getHourlySummarizedByDayFunctionParameterExce" +
+            "ptionFault", Name="FunctionParameterException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
         SmartH2O_SeeApp.ServiceReference1.HourlySummarizedValues[] getHourlySummarizedByDay(SmartH2O_SeeApp.ServiceReference1.ParameterType parameter, System.DateTime day);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceSmartH2O/getHourlySummarizedByDay", ReplyAction="http://tempuri.org/IServiceSmartH2O/getHourlySummarizedByDayResponse")]
@@ -440,6 +487,8 @@ namespace SmartH2O_SeeApp.ServiceReference1 {
             "sExceptionFault", Name="FoundNoResultsException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
         [System.ServiceModel.FaultContractAttribute(typeof(SmartH2O_SeeApp.ServiceReference1.InternalErrorException), Action="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataIntervalInternalError" +
             "ExceptionFault", Name="InternalErrorException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
+        [System.ServiceModel.FaultContractAttribute(typeof(SmartH2O_SeeApp.ServiceReference1.FunctionParameterException), Action="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataIntervalFunctionParam" +
+            "eterExceptionFault", Name="FunctionParameterException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
         SmartH2O_SeeApp.ServiceReference1.DailySummarizedValues[] getDailySummarizedByDataInterval(SmartH2O_SeeApp.ServiceReference1.ParameterType parameter, System.DateTime startingDate, System.DateTime endingDate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataInterval", ReplyAction="http://tempuri.org/IServiceSmartH2O/getDailySummarizedByDataIntervalResponse")]
@@ -460,6 +509,8 @@ namespace SmartH2O_SeeApp.ServiceReference1 {
             "ionFault", Name="FoundNoResultsException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
         [System.ServiceModel.FaultContractAttribute(typeof(SmartH2O_SeeApp.ServiceReference1.InternalErrorException), Action="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformationInternalErrorExcepti" +
             "onFault", Name="InternalErrorException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
+        [System.ServiceModel.FaultContractAttribute(typeof(SmartH2O_SeeApp.ServiceReference1.FunctionParameterException), Action="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformationFunctionParameterExc" +
+            "eptionFault", Name="FunctionParameterException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
         SmartH2O_SeeApp.ServiceReference1.AlarmData[] getDailyAlarmsInformation(System.DateTime date);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformation", ReplyAction="http://tempuri.org/IServiceSmartH2O/getDailyAlarmsInformationResponse")]
@@ -470,6 +521,8 @@ namespace SmartH2O_SeeApp.ServiceReference1 {
             "ltsExceptionFault", Name="FoundNoResultsException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
         [System.ServiceModel.FaultContractAttribute(typeof(SmartH2O_SeeApp.ServiceReference1.InternalErrorException), Action="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataIntervalInternalErr" +
             "orExceptionFault", Name="InternalErrorException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
+        [System.ServiceModel.FaultContractAttribute(typeof(SmartH2O_SeeApp.ServiceReference1.FunctionParameterException), Action="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataIntervalFunctionPar" +
+            "ameterExceptionFault", Name="FunctionParameterException", Namespace="http://schemas.datacontract.org/2004/07/SmartH2O_Service")]
         SmartH2O_SeeApp.ServiceReference1.AlarmData[] getAlarmsInformationByDataInterval(System.DateTime startingDate, System.DateTime endingDate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataInterval", ReplyAction="http://tempuri.org/IServiceSmartH2O/getAlarmsInformationByDataIntervalResponse")]
